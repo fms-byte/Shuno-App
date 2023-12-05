@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 
+import '../APIs/connection.dart';
+
 class DownloadButton extends StatefulWidget {
   final Map data;
   final String? icon;
@@ -312,7 +314,7 @@ class _AlbumDownloadButtonState extends State<AlbumDownloadButton> {
                           '${AppLocalizations.of(context)!.downingAlbum} "${widget.albumName}"',
                         );
 
-                        data = (await SaavnAPI()
+                        data = (await BackendApi()
                             .fetchAlbumSongs(widget.albumId))['songs'] as List;
                         for (final items in data) {
                           down.prepareDownload(

@@ -364,7 +364,7 @@ class Download with ChangeNotifier {
         kUrl = data['url'].toString();
       }
     } else {
-      Logger.root.info('Fetching jiosaavn download url with preferred quality');
+      Logger.root.info('Fetching shuno download url with preferred quality');
       kUrl = kUrl.replaceAll(
         '_96.',
         "_${preferredDownloadQuality.replaceAll(' kbps', '')}.",
@@ -413,7 +413,7 @@ class Download with ChangeNotifier {
               id: data['id'].toString(),
               title: data['title'].toString(),
               artist: data['artist'].toString(),
-              saavnHas: data['has_lyrics'] == 'true',
+              shunoHas: data['has_lyrics'] == 'true',
             );
             lyrics = res['lyrics'].toString();
           }

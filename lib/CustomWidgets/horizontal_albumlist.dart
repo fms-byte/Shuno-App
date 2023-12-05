@@ -11,6 +11,8 @@ import 'package:shuno/Services/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../APIs/connection.dart';
+
 class HorizontalAlbumsList extends StatelessWidget {
   final List songsList;
   final Function(int) onTap;
@@ -215,7 +217,7 @@ class HorizontalAlbumsList extends StatelessWidget {
                                             .connectingRadio,
                                         duration: const Duration(seconds: 2),
                                       );
-                                      SaavnAPI().createRadio(
+                                      BackendApi().createRadio(
                                         names: [
                                           item['title']?.toString() ?? '',
                                         ],
@@ -225,7 +227,7 @@ class HorizontalAlbumsList extends StatelessWidget {
                                         stationType: 'artist',
                                       ).then((value) {
                                         if (value != null) {
-                                          SaavnAPI()
+                                          BackendApi()
                                               .getRadioSongs(stationId: value)
                                               .then((value) {
                                             PlayerInvoke.init(

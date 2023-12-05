@@ -31,13 +31,13 @@ List likedRadio =
 Map data = Hive.box('cache').get('homepage', defaultValue: {}) as Map;
 List lists = ['recent', 'playlist', ...?data['collections'] as List?];
 
-class SaavnHomePage extends StatefulWidget {
+class ShunoHomePage extends StatefulWidget {
   @override
-  _SaavnHomePageState createState() => _SaavnHomePageState();
+  _ShunoHomePageState createState() => _ShunoHomePageState();
 }
 
-class _SaavnHomePageState extends State<SaavnHomePage>
-    with AutomaticKeepAliveClientMixin<SaavnHomePage> {
+class _ShunoHomePageState extends State<ShunoHomePage>
+    with AutomaticKeepAliveClientMixin<ShunoHomePage> {
   List recentList =
       Hive.box('cache').get('recentSongs', defaultValue: []) as List;
   Map likedArtists =
@@ -77,15 +77,15 @@ class _SaavnHomePageState extends State<SaavnHomePage>
       case 'charts':
         return '';
       case 'radio_station':
-        return 'Radio • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioSaavn' : item['subtitle']?.toString().unescape()}';
+        return 'Radio • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle']?.toString().unescape()}';
       case 'playlist':
-        return 'Playlist • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioSaavn' : item['subtitle'].toString().unescape()}';
+        return 'Playlist • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
       case 'song':
         return 'Single • ${item['artist']?.toString().unescape()}';
       case 'mix':
-        return 'Mix • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioSaavn' : item['subtitle'].toString().unescape()}';
+        return 'Mix • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
       case 'show':
-        return 'Podcast • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioSaavn' : item['subtitle'].toString().unescape()}';
+        return 'Podcast • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
       case 'album':
         final artists = item['more_info']?['artistMap']?['artists']
             .map((artist) => artist['name'])
@@ -605,7 +605,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                                           .connectingRadio,
                                       duration: const Duration(seconds: 2),
                                     );
-                                    SaavnAPI()
+                                    BackendApi()
                                         .createRadio(
                                       names: item['more_info']
                                                       ['featured_station_type']
@@ -625,7 +625,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                                     )
                                         .then((value) {
                                       if (value != null) {
-                                        SaavnAPI()
+                                        BackendApi()
                                             .getRadioSongs(stationId: value)
                                             .then((value) {
                                           PlayerInvoke.init(

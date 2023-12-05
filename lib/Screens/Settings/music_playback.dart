@@ -1,7 +1,7 @@
 import 'package:shuno/CustomWidgets/box_switch_tile.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/snackbar.dart';
-import 'package:shuno/Screens/Home/saavn.dart' as home_screen;
+import 'package:shuno/Screens/Home/shuno.dart' as home_screen;
 import 'package:shuno/Screens/Top Charts/top.dart' as top_screen;
 import 'package:shuno/constants/countrycodes.dart';
 import 'package:flutter/material.dart';

@@ -12,7 +12,7 @@
 //   if (tempDirPath == '') return;
 //   final imageFile = File('$tempDirPath/images/artists/$name.jpg');
 //   if (!await imageFile.exists()) {
-//     final result = await SaavnAPI().fetchAlbums(
+//     final result = await BackendApi().fetchAlbums(
 //       searchQuery: name,
 //       type: 'artist',
 //       count: 1,

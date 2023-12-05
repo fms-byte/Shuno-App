@@ -103,8 +103,8 @@
 
                 <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="jiosaavn.com" />
-                <data android:host="www.jiosaavn.com" />
+                <data android:host="shuno.com" />
+                <data android:host="www.shuno.com" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />

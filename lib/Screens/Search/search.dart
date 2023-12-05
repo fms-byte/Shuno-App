@@ -27,6 +27,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:logging/logging.dart';
 
+import '../../APIs/connection.dart';
+
 class SearchPage extends StatefulWidget {
   final String query;
   final bool fromHome;
@@ -55,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
   bool? fromHome;
   List<Map<dynamic, dynamic>> searchedList = [];
   String searchType =
-      Hive.box('settings').get('searchType', defaultValue: 'saavn').toString();
+      Hive.box('settings').get('searchType', defaultValue: 'shuno').toString();
   List searchHistory =
       Hive.box('settings').get('search', defaultValue: []) as List;
   // bool showHistory =
@@ -115,8 +117,8 @@ class _SearchPageState extends State<SearchPage> {
         });
         break;
       default:
-        Logger.root.info('calling saavn search');
-        searchedList = await SaavnAPI()
+        Logger.root.info('calling shuno search');
+        searchedList = await BackendApi()
             .fetchSearchResults(query == '' ? widget.query : query);
         for (final element in searchedList) {
           if (element['title'] != 'Top Result') {
@@ -130,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> getTrendingSearch() async {
-    topSearch.value = await SaavnAPI().getTopSearches();
+    topSearch.value = await BackendApi().getTopSearches();
   }
 
   void addToHistory(String title) {
@@ -401,7 +403,7 @@ class _SearchPageState extends State<SearchPage> {
                             ? null
                             : Row(
                                 children: getChoices(context, [
-                                  {'label': 'Saavn', 'key': 'saavn'},
+                                  {'label': 'shuno', 'key': 'shuno'},
                                   {'label': 'YtMusic', 'key': 'ytm'},
                                   {'label': 'YouTube', 'key': 'yt'},
                                 ]),
@@ -465,7 +467,7 @@ class _SearchPageState extends State<SearchPage> {
                                                           GestureDetector(
                                                             onTap:
                                                                 searchType !=
-                                                                        'saavn'
+                                                                        'shuno'
                                                                     ? () {
                                                                         Navigator
                                                                             .push(
@@ -669,7 +671,7 @@ class _SearchPageState extends State<SearchPage> {
                                                           .toString(),
                                                     ),
                                                     trailingWidget: searchType !=
-                                                            'saavn'
+                                                            'shuno'
                                                         ? ((itemType ==
                                                                     'song' ||
                                                                 itemType ==
@@ -717,7 +719,7 @@ class _SearchPageState extends State<SearchPage> {
                                                                         ['id']
                                                                     .toString(),
                                                               ),
-                                                    onTap: searchType != 'saavn'
+                                                    onTap: searchType != 'shuno'
                                                         ? () async {
                                                             if (itemType ==
                                                                 'artist') {

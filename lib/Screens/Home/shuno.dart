@@ -621,7 +621,7 @@ class _ShunoHomePageState extends State<ShunoHomePage>
                               .connectingRadio,
                           duration: const Duration(seconds: 2),
                         );
-                        SaavnAPI()
+                        BackendApi()
                             .createRadio(
                           names: item['more_info']
                           ['featured_station_type']
@@ -641,7 +641,7 @@ class _ShunoHomePageState extends State<ShunoHomePage>
                         )
                             .then((value) {
                           if (value != null) {
-                            SaavnAPI()
+                            BackendApi()
                                 .getRadioSongs(stationId: value)
                                 .then((value) {
                               PlayerInvoke.init(

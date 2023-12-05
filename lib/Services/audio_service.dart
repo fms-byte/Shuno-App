@@ -20,6 +20,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../APIs/connection.dart';
+
 class AudioPlayerHandlerImpl extends BaseAudioHandler
     with QueueHandler, SeekHandler
     implements AudioPlayerHandler {
@@ -199,9 +201,9 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
             Future.delayed(const Duration(seconds: 1), () async {
               if (item == mediaItem.value) {
                 if (item.genre != 'YouTube') {
-                  final List value = await SaavnAPI().getReco(item.id);
+                  final List value = await BackendApi().getReco(item.id);
                   value.shuffle();
-                  // final List value = await SaavnAPI().getRadioSongs(
+                  // final List value = await BackendApi().getRadioSongs(
                   //     stationId: stationId!, count: queueLength - index - 20);
 
                   for (int i = 0; i < value.length; i++) {
@@ -693,11 +695,11 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     // addLastQueue(newQueue);
     // stationId = '';
     // stationNames = newQueue.map((e) => e.id).toList();
-    // SaavnAPI()
+    // BackendApi()
     //     .createRadio(names: stationNames, stationType: stationType)
     //     .then((value) async {
     //   stationId = value;
-    //   final List songsList = await SaavnAPI()
+    //   final List songsList = await BackendApi()
     //       .getRadioSongs(stationId: stationId!, count: 20 - newQueue.length);
 
     //   for (int i = 0; i < songsList.length; i++) {

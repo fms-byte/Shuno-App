@@ -595,7 +595,6 @@ class BackendApi {
 
     try {
 
-        print(playListId);
 
         final Uri url = Uri.parse('${BackendApi().ApiUrl}/playlist/$playListId'); // Convert the URL to a Uri object
         final res = await http.get(

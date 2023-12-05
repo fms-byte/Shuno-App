@@ -57,7 +57,7 @@ class ImportPlaylist extends StatelessWidget {
                                 ? AppLocalizations.of(
                                     context,
                                   )!
-                                    .importJioSaavn
+                                    .importShuno
                                 : AppLocalizations.of(
                                     context,
                                   )!
@@ -98,7 +98,7 @@ class ImportPlaylist extends StatelessWidget {
                                 settingsBox,
                               )
                             : index == 3
-                                ? importJioSaavn(
+                                ? importShuno(
                                     cntxt,
                                     playlistNames,
                                     settingsBox,
@@ -350,7 +350,7 @@ Future<void> importSpotifyViaLink(
   );
 }
 
-Future<void> importJioSaavn(
+Future<void> importShuno(
   BuildContext context,
   List playlistNames,
   Box settingsBox,
@@ -363,7 +363,7 @@ Future<void> importJioSaavn(
     onSubmitted: (String value, BuildContext context) async {
       final String link = value.trim();
       Navigator.pop(context);
-      final Map data = await SearchAddPlaylist.addJioSaavnPlaylist(
+      final Map data = await SearchAddPlaylist.addJioShunoPlaylist(
         link,
       );
 
@@ -372,7 +372,7 @@ Future<void> importJioSaavn(
         addPlaylist(playName, data['tracks'] as List);
         playlistNames.add(playName);
       } else {
-        Logger.root.severe('Failed to import JioSaavn playlist. data is empty');
+        Logger.root.severe('Failed to import JioShuno playlist. data is empty');
         ShowSnackBar().showSnackBar(
           context,
           AppLocalizations.of(context)!.failedImport,
