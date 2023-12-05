@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:shuno/APIs/api.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/bouncy_playlist_header_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
@@ -67,7 +68,7 @@ class _SongsListPageState extends State<SongsListPage> {
     try {
       switch (widget.listItem['type'].toString()) {
         case 'songs':
-          SaavnAPI()
+          BackendApi()
               .fetchSongSearchResults(
             searchQuery: widget.listItem['id'].toString(),
             page: page,
@@ -88,7 +89,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'album':
-          SaavnAPI()
+          BackendApi()
               .fetchAlbumSongs(widget.listItem['id'].toString())
               .then((value) {
             setState(() {
@@ -106,7 +107,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'playlist':
-          SaavnAPI()
+          BackendApi()
               .fetchPlaylistSongs(widget.listItem['id'].toString())
               .then((value) {
             setState(() {
@@ -124,7 +125,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'mix':
-          SaavnAPI()
+          BackendApi()
               .getSongFromToken(
             widget.listItem['perma_url'].toString().split('/').last,
             'mix',

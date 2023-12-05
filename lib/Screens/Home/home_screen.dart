@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:shuno/CustomWidgets/drawer.dart';
 import 'package:shuno/CustomWidgets/textinput_dialog.dart';
 import 'package:shuno/Screens/Home/saavn.dart';
+import 'package:shuno/Screens/Home/shuno.dart';
 import 'package:shuno/Screens/Search/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ];
           },
-          body: SaavnHomePage(),
+          body: ShunoHomePage(),
         ),
         if (!rotated)
           homeDrawer(

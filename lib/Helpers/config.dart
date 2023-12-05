@@ -206,7 +206,7 @@ class MyTheme with ChangeNotifier {
         return Colors.white;
 
       default:
-        return _isDark ? Colors.tealAccent[400]! : Colors.lightBlueAccent[400]!;
+        return _isDark ? Colors.purple[400]! : Colors.purple[500]!;
     }
   }
 
@@ -294,7 +294,7 @@ class MyTheme with ChangeNotifier {
         return Colors.white;
 
       default:
-        return _isDark ? Colors.tealAccent[400]! : Colors.lightBlueAccent[400]!;
+        return _isDark ? Colors.purple[400]! : Colors.purple[600]!;
     }
   }
 

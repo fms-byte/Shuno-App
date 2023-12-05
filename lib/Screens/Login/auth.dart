@@ -27,10 +27,6 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
-
-
-
-
   Future _addUserData(  String username, String password) async {
 
     final Uri url = Uri.parse('${BackendApi().ApiUrl}/users/login'); // Convert the URL to a Uri object

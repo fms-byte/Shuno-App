@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:shuno/APIs/api.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/collage.dart';
 import 'package:shuno/CustomWidgets/horizontal_albumlist.dart';
 import 'package:shuno/CustomWidgets/horizontal_albumlist_separated.dart';
@@ -52,7 +53,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
   int playlistIndex = 1;
 
   Future<void> getHomePageData() async {
-    Map recievedData = await SaavnAPI().fetchHomePageData();
+    Map recievedData = await BackendApi().fetchHomePageData();
     if (recievedData.isNotEmpty) {
       Hive.box('cache').put('homepage', recievedData);
       data = recievedData;
@@ -396,6 +397,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                             .toLowerCase(),
                       ))
                   ? const SizedBox()
+
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
