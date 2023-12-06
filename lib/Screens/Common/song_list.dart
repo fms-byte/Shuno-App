@@ -92,6 +92,7 @@ class _SongsListPageState extends State<SongsListPage> {
           BackendApi()
               .fetchAlbumSongs(widget.listItem['id'].toString())
               .then((value) {
+
             setState(() {
               songList = value['songs'] as List;
               fetched = true;
@@ -233,7 +234,7 @@ class _SongsListPageState extends State<SongsListPage> {
                 ],
                 title:
                     widget.listItem['title']?.toString().unescape() ?? 'Songs',
-                subtitle: '${songList.length} Songs',
+                subtitle: '${songList.length} Items',
                 secondarySubtitle: widget.listItem['subTitle']?.toString() ??
                     widget.listItem['subtitle']?.toString(),
                 onPlayTap: () => PlayerInvoke.init(
@@ -260,7 +261,7 @@ class _SongsListPageState extends State<SongsListPage> {
                           bottom: 5.0,
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!.songs,
+                          'Contents',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,

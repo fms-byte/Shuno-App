@@ -17,8 +17,6 @@ import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Common/song_list_view.dart';
 import 'package:shuno/Screens/Search/albums.dart';
 import 'package:shuno/Screens/Search/artists.dart';
-import 'package:shuno/Screens/YouTube/youtube_artist.dart';
-import 'package:shuno/Screens/YouTube/youtube_playlist.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:shuno/Services/youtube_services.dart';
 import 'package:shuno/Services/yt_music.dart';
@@ -404,8 +402,6 @@ class _SearchPageState extends State<SearchPage> {
                             : Row(
                                 children: getChoices(context, [
                                   {'label': 'shuno', 'key': 'shuno'},
-                                  {'label': 'YtMusic', 'key': 'ytm'},
-                                  {'label': 'YouTube', 'key': 'yt'},
                                 ]),
                               ),
                       ),
@@ -719,148 +715,39 @@ class _SearchPageState extends State<SearchPage> {
                                                                         ['id']
                                                                     .toString(),
                                                               ),
-                                                    onTap: searchType != 'shuno'
-                                                        ? () async {
-                                                            if (itemType ==
-                                                                'artist') {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          YouTubeArtist(
-                                                                    artistId: items[index]
-                                                                            [
-                                                                            'id']
-                                                                        .toString(),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-                                                            if (itemType ==
-                                                                    'playlist' ||
-                                                                itemType ==
-                                                                    'album' ||
-                                                                itemType ==
-                                                                    'single') {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          YouTubePlaylist(
-                                                                    playlistId: items[index]
-                                                                            [
-                                                                            'id']
-                                                                        .toString(),
-                                                                    type: itemType ==
-                                                                                'album' ||
-                                                                            itemType ==
-                                                                                'single'
-                                                                        ? 'album'
-                                                                        : 'playlist',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-                                                            if (itemType ==
-                                                                    'song' ||
-                                                                itemType ==
-                                                                    'video') {
-                                                              final Map?
-                                                                  response =
-                                                                  await YouTubeServices()
-                                                                      .formatVideoFromId(
-                                                                id: items[index]
-                                                                        ['id']
-                                                                    .toString(),
-                                                                data:
-                                                                    items[index]
-                                                                        as Map,
-                                                              );
-                                                              if (itemType ==
-                                                                  'song') {
-                                                                final Map
-                                                                    response2 =
-                                                                    await YtMusicService()
-                                                                        .getSongData(
-                                                                  videoId: items[
-                                                                              index]
-                                                                          ['id']
-                                                                      .toString(),
-                                                                );
-                                                                if (response !=
-                                                                        null &&
-                                                                    response2[
-                                                                            'image'] !=
-                                                                        null) {
-                                                                  response[
-                                                                      'image'] = response2[
-                                                                          'image'] ??
-                                                                      response[
-                                                                          'image'];
-                                                                }
-                                                              }
-
-                                                              if (response !=
-                                                                  null) {
-                                                                PlayerInvoke
-                                                                    .init(
-                                                                  songsList: [
-                                                                    response,
-                                                                  ],
-                                                                  index: 0,
-                                                                  isOffline:
-                                                                      false,
-                                                                );
-                                                              }
-                                                              if (response ==
-                                                                  null) {
-                                                                ShowSnackBar()
-                                                                    .showSnackBar(
-                                                                  context,
-                                                                  AppLocalizations
-                                                                          .of(
-                                                                    context,
-                                                                  )!
-                                                                      .ytLiveAlert,
-                                                                );
-                                                              }
-                                                            }
-                                                          }
-                                                        : () {
-                                                            if (title ==
-                                                                'Songs') {
-                                                              PlayerInvoke.init(
-                                                                songsList: [
-                                                                  items[index],
-                                                                ],
-                                                                index: 0,
-                                                                isOffline:
-                                                                    false,
-                                                              );
-                                                            } else {
-                                                              Navigator.push(
-                                                                context,
-                                                                PageRouteBuilder(
-                                                                  opaque: false,
-                                                                  pageBuilder: (
-                                                                    _,
-                                                                    __,
-                                                                    ___,
-                                                                  ) =>
-                                                                      title == 'Artists' ||
-                                                                              (title == 'Top Result' && items[0]['type'] == 'artist')
-                                                                          ? ArtistSearchPage(
-                                                                              data: items[index] as Map,
-                                                                            )
-                                                                          : SongsListPage(
-                                                                              listItem: items[index] as Map,
-                                                                            ),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
+                                                    onTap: () {
+                                                      if (title ==
+                                                          'Songs') {
+                                                        PlayerInvoke.init(
+                                                          songsList: [
+                                                            items[index],
+                                                          ],
+                                                          index: 0,
+                                                          isOffline:
+                                                          false,
+                                                        );
+                                                      } else {
+                                                        Navigator.push(
+                                                          context,
+                                                          PageRouteBuilder(
+                                                            opaque: false,
+                                                            pageBuilder: (
+                                                                _,
+                                                                __,
+                                                                ___,
+                                                                ) =>
+                                                            title == 'Artists' ||
+                                                                (title == 'Top Result' && items[0]['type'] == 'artist')
+                                                                ? ArtistSearchPage(
+                                                              data: items[index] as Map,
+                                                            )
+                                                                : SongsListPage(
+                                                              listItem: items[index] as Map,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
                                                   );
                                                 },
                                               ),

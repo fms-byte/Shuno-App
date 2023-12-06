@@ -95,50 +95,7 @@ class _DownloadPageState extends State<DownloadPage> {
               ),
               dense: true,
             ),
-            ListTile(
-              title: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .ytDownQuality,
-              ),
-              subtitle: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .ytDownQualitySub,
-              ),
-              onTap: () {},
-              trailing: DropdownButton(
-                value: ytDownloadQuality,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(context).textTheme.bodyLarge!.color,
-                ),
-                underline: const SizedBox(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(
-                      () {
-                        ytDownloadQuality = newValue;
-                        Hive.box('settings').put('ytDownloadQuality', newValue);
-                      },
-                    );
-                  }
-                },
-                items: <String>['Low', 'High']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                    ),
-                  );
-                }).toList(),
-              ),
-              dense: true,
-            ),
-            ListTile(
+             ListTile(
               title: Text(
                 AppLocalizations.of(
                   context,
@@ -303,24 +260,7 @@ class _DownloadPageState extends State<DownloadPage> {
               isThreeLine: true,
               defaultValue: false,
             ),
-            BoxSwitchTile(
-              title: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .createYtFold,
-              ),
-              subtitle: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .createYtFoldSub,
-              ),
-              keyName: 'createYoutubeFolder',
-              isThreeLine: true,
-              defaultValue: false,
-            ),
-            BoxSwitchTile(
+             BoxSwitchTile(
               title: Text(
                 AppLocalizations.of(
                   context,

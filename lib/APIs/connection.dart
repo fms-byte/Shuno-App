@@ -17,8 +17,8 @@ import 'package:logging/logging.dart';
 
 
 class BackendApi {
-  String ApiUrl = 'http://192.168.0.121:3000/api';
-
+  String ApiUrl = 'http://10.22.130.142:3000/api';
+  //10.22.130.142
 
   List preferredLanguages = Hive.box('settings')
       .get('preferredLanguage', defaultValue: ['English']) as List;
@@ -473,25 +473,40 @@ class BackendApi {
   }
 
   Future<Map> fetchAlbumSongs(String albumId) async {
-    final String params = '${endpoints['albumDetails']}&cc=in&albumid=$albumId';
+
+    BackendApi.printError(albumId);
     try {
-      final res = await getResponse(params);
+      final Uri url = Uri.parse('${BackendApi().ApiUrl}/album/$albumId'); // Convert the URL to a Uri object
+      final res = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
       if (res.statusCode == 200) {
         final getMain = json.decode(res.body);
+
         if (getMain['list'] != '') {
           final List responseList = getMain['list'] as List;
+           BackendApi.printError(responseList);
+
           return {
-            'songs':
-            await FormatResponse.formatSongsResponse(responseList, 'album'),
+            'songs': await FormatResponse.formatSongsResponse(
+              responseList,
+              'album',
+            ),
             'error': '',
           };
         }
+
       }
-      Logger.root.severe('Songs not found in fetchAlbumSongs: ${res.body}');
+
       return {
-        'songs': List.empty(),
-        'error': '',
+        'songs' : [],
+        'error' : '',
       };
+
     } catch (e) {
       Logger.root.severe('Error in fetchAlbumSongs: $e');
       return {

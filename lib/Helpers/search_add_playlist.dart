@@ -107,7 +107,7 @@ class SearchAddPlaylist {
     return res['tracks'] as List;
   }
 
-  static Future<Map> addJioShunoPlaylist(String inLink) async {
+  static Future<Map> addShunoPlaylist(String inLink) async {
     try {
       final String id = inLink.split('/').last;
       if (id != '') {
@@ -121,7 +121,7 @@ class SearchAddPlaylist {
       }
       return {};
     } catch (e) {
-      Logger.root.severe('Error while adding JioShuno playlist: $e');
+      Logger.root.severe('Error while adding Shuno playlist: $e');
       return {};
     }
   }

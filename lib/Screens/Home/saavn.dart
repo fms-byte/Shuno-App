@@ -77,15 +77,15 @@ class _ShunoHomePageState extends State<ShunoHomePage>
       case 'charts':
         return '';
       case 'radio_station':
-        return 'Radio • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle']?.toString().unescape()}';
+        return 'Radio • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'Shuno' : item['subtitle']?.toString().unescape()}';
       case 'playlist':
-        return 'Playlist • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
+        return 'Playlist • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'Shuno' : item['subtitle'].toString().unescape()}';
       case 'song':
         return 'Single • ${item['artist']?.toString().unescape()}';
       case 'mix':
-        return 'Mix • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
+        return 'Mix • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'Shuno' : item['subtitle'].toString().unescape()}';
       case 'show':
-        return 'Podcast • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'JioShuno' : item['subtitle'].toString().unescape()}';
+        return 'Podcast • ${(item['subtitle']?.toString() ?? '').isEmpty ? 'Shuno' : item['subtitle'].toString().unescape()}';
       case 'album':
         final artists = item['more_info']?['artistMap']?['artists']
             .map((artist) => artist['name'])

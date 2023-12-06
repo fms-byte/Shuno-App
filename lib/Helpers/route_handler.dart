@@ -8,7 +8,6 @@ import 'package:shuno/Helpers/spotify_helper.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Screens/Search/search.dart';
-import 'package:shuno/Screens/YouTube/youtube_playlist.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:shuno/Services/youtube_services.dart';
 import 'package:flutter/material.dart';
@@ -180,21 +179,6 @@ class YtUrlHandler extends StatelessWidget {
           PageRouteBuilder(
             opaque: false,
             pageBuilder: (_, __, ___) => const PlayScreen(),
-          ),
-        );
-      });
-    } else if (type == 'list') {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => YouTubePlaylist(
-              playlistId: id,
-              // playlistImage: '',
-              // playlistName: '',
-              // playlistSubtitle: '',
-              // playlistSecondarySubtitle: '',
-            ),
           ),
         );
       });

@@ -31,6 +31,7 @@ class FormatResponse {
     List responseList,
     String type,
   ) async {
+    BackendApi.printError(type);
     final List searchedList = [];
     for (int i = 0; i < responseList.length; i++) {
       Map? response;
@@ -56,6 +57,8 @@ class FormatResponse {
         }
       }
     }
+    BackendApi.printError(searchedList);
+
     return searchedList;
   }
 
@@ -445,10 +448,10 @@ class FormatResponse {
         data['new_trending'] =
             await formatSongsInList(data['new_trending'] as List);
       }
-      // if (data['new_albums'] != null) {
-      //   data['new_albums'] =
-      //       await formatSongsInList(data['new_albums'] as List);
-      // }
+      if (data['new_albums'] != null) {
+        data['new_albums'] =
+            await formatSongsInList(data['new_albums'] as List);
+      }
       // if (data['city_mod'] != null) {
       //   data['city_mod'] = await formatSongsInList(data['city_mod'] as List);
       // }
@@ -469,6 +472,7 @@ class FormatResponse {
       //       await formatSongsInList(data[promoList[i]] as List);
       // }
       data['collections'] = [
+        'new_albums',
         'new_trending',
         // 'charts',
         // 'new_albums',

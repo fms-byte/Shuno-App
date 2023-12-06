@@ -29,9 +29,8 @@ class _OthersPageState extends State<OthersPage> {
   List includedExcludedPaths = Hive.box('settings')
       .get('includedExcludedPaths', defaultValue: []) as List;
   String lang =
-      Hive.box('settings').get('lang', defaultValue: 'English') as String;
-  bool useProxy =
-      Hive.box('settings').get('useProxy', defaultValue: false) as bool;
+      Hive.box('settings').get('lang', defaultValue: 'Bangla') as String;
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +88,7 @@ class _OthersPageState extends State<OthersPage> {
                         MyApp.of(context).setLocale(
                           Locale.fromSubtags(
                             languageCode:
-                                LanguageCodes.languageCodes[newValue] ?? 'en',
+                                LanguageCodes.languageCodes[newValue] ?? 'bn',
                           ),
                         );
                         Hive.box('settings').put('lang', newValue);
@@ -448,6 +447,7 @@ class _OthersPageState extends State<OthersPage> {
               keyName: 'stopForegroundService',
               defaultValue: true,
             ),
+
             // const BoxSwitchTile(
             //   title: Text('Remove Service from foreground when paused'),
             //   subtitle: Text(
@@ -473,175 +473,7 @@ class _OthersPageState extends State<OthersPage> {
               isThreeLine: true,
               defaultValue: false,
             ),
-            BoxSwitchTile(
-              title: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .useProxy,
-              ),
-              subtitle: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .useProxySub,
-              ),
-              keyName: 'useProxy',
-              defaultValue: false,
-              isThreeLine: true,
-              onChanged: ({required bool val, required Box box}) {
-                useProxy = val;
-                setState(
-                  () {},
-                );
-              },
-            ),
-            Visibility(
-              visible: useProxy,
-              child: ListTile(
-                title: Text(
-                  AppLocalizations.of(
-                    context,
-                  )!
-                      .proxySet,
-                ),
-                subtitle: Text(
-                  AppLocalizations.of(
-                    context,
-                  )!
-                      .proxySetSub,
-                ),
-                dense: true,
-                trailing: Text(
-                  '${Hive.box('settings').get("proxyIp", defaultValue: "103.47.67.134")}:${Hive.box('settings').get("proxyPort", defaultValue: 8080)}',
-                  style: const TextStyle(fontSize: 12),
-                ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      final controller = TextEditingController(
-                        text: settingsBox
-                            .get('proxyIp', defaultValue: '103.47.67.134')
-                            .toString(),
-                      );
-                      final controller2 = TextEditingController(
-                        text: settingsBox
-                            .get('proxyPort', defaultValue: 8080)
-                            .toString(),
-                      );
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            10.0,
-                          ),
-                        ),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(
-                                    context,
-                                  )!
-                                      .ipAdd,
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            TextField(
-                              autofocus: true,
-                              controller: controller,
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(
-                                    context,
-                                  )!
-                                      .port,
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            TextField(
-                              autofocus: true,
-                              controller: controller2,
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Colors.white
-                                  : Colors.grey[700],
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              AppLocalizations.of(
-                                context,
-                              )!
-                                  .cancel,
-                            ),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  Theme.of(context).colorScheme.secondary ==
-                                          Colors.white
-                                      ? Colors.black
-                                      : null,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                            ),
-                            onPressed: () {
-                              settingsBox.put(
-                                'proxyIp',
-                                controller.text.trim(),
-                              );
-                              settingsBox.put(
-                                'proxyPort',
-                                int.parse(
-                                  controller2.text.trim(),
-                                ),
-                              );
-                              Navigator.pop(context);
-                              setState(
-                                () {},
-                              );
-                            },
-                            child: Text(
-                              AppLocalizations.of(
-                                context,
-                              )!
-                                  .ok,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            ListTile(
+              ListTile(
               title: Text(
                 AppLocalizations.of(
                   context,

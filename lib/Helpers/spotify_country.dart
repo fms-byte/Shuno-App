@@ -1,7 +1,6 @@
 //Shuno
 
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
-import 'package:shuno/Screens/Top Charts/top.dart' as top_screen;
 import 'package:shuno/constants/countrycodes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -46,19 +45,14 @@ class SpotifyCountry {
                     value: countries[idx],
                     groupValue: region,
                     onChanged: (value) {
-                      top_screen.localSongs = [];
                       region = countries[idx];
-                      top_screen.localFetched = false;
-                      top_screen.localFetchFinished.value = false;
                       Hive.box('settings').put('region', region);
                       Navigator.pop(context);
                     },
                   ),
                   selected: region == countries[idx],
                   onTap: () {
-                    top_screen.localSongs = [];
                     region = countries[idx];
-                    top_screen.localFetchFinished.value = false;
                     Hive.box('settings').put('region', region);
                     Navigator.pop(context);
                   },

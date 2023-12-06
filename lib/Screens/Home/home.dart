@@ -19,7 +19,6 @@ import 'package:shuno/Screens/LocalMusic/downed_songs.dart';
 import 'package:shuno/Screens/LocalMusic/downed_songs_desktop.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Screens/Settings/new_settings_page.dart';
-import 'package:shuno/Screens/YouTube/youtube_home.dart';
 import 'package:shuno/Services/ext_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,15 +37,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
   String? appVersion;
-  String name =
-      Hive.box('settings').get('username') as String;
+
   bool checkUpdate =
       Hive.box('settings').get('checkUpdate', defaultValue: false) as bool;
   bool autoBackup =
       Hive.box('settings').get('autoBackup', defaultValue: false) as bool;
   List sectionsToShow = Hive.box('settings').get(
     'sectionsToShow',
-    defaultValue: ['Home', 'YouTube', 'Library'],
+    defaultValue: ['Home', 'Setting', 'Library'],
   ) as List;
   DateTime? backButtonPressTime;
   final bool useDense = false;
@@ -54,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   void callback() {
     sectionsToShow = Hive.box('settings').get(
       'sectionsToShow',
-      defaultValue: ['Home', 'YouTube', 'Library'],
+      defaultValue: ['Home', 'Setting', 'Library'],
     ) as List;
     onItemTapped(0);
     setState(() {});
@@ -120,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.pop(context);
                   launchUrl(
-                    Uri.parse('https://sangwan5688.github.io/download/'),
+                    Uri.parse('https://github.com/shuno-cms'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
@@ -503,12 +501,7 @@ class _HomePageState extends State<HomePage> {
                               icon: const Icon(Icons.home_rounded),
                               label: Text(AppLocalizations.of(context)!.home),
                             );
-                          case 'YouTube':
-                            return NavigationRailDestination(
-                              icon: const Icon(MdiIcons.youtube),
-                              label:
-                                  Text(AppLocalizations.of(context)!.youTube),
-                            );
+
                           case 'Library':
                             return NavigationRailDestination(
                               icon: const Icon(Icons.my_library_music_rounded),
@@ -585,6 +578,7 @@ class _HomePageState extends State<HomePage> {
                     case 'Home':
                       return const SafeArea(child: HomeScreen());
                     case 'Library':
+
                       return const LibraryPage();
                     default:
                       return NewSettingsPage(callback: callback);
@@ -608,12 +602,6 @@ class _HomePageState extends State<HomePage> {
             selectedColor: Theme.of(context).colorScheme.secondary,
           );
 
-        case 'YouTube':
-          return CustomBottomNavBarItem(
-            icon: const Icon(MdiIcons.youtube),
-            title: Text(AppLocalizations.of(context)!.youTube),
-            selectedColor: Theme.of(context).colorScheme.secondary,
-          );
         case 'Library':
           return CustomBottomNavBarItem(
             icon: const Icon(Icons.my_library_music_rounded),

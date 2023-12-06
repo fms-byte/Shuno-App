@@ -166,40 +166,43 @@ class _AuthScreenState extends State<AuthScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Shuno',
-                                    style: TextStyle(
-                                      height: 0.97,
-                                      fontSize: 80,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                            SizedBox(
+                              width: 230,
+                              height: 230,
+
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Container(
+                                    color: Colors.white, // Add a background color if necessary
+                                    child: Image(
+                                      image: AssetImage(
+                                        'assets/ic_launcher.png',
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
                             Column(
                               children: [
                                 SizedBox(
+
                                   width: MediaQuery.sizeOf(context).width,
-                                  height: 200,
-                                  child: const Image(
-                                    image: AssetImage(
-                                      'assets/cover.png',
+                                  height: 30,
+                                  child: Text(
+                                    'Enter your username & password',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
 
-                            SizedBox(
-                              height: MediaQuery.sizeOf(context).height * 0.1,
-                            ),
                             Column(
                               children: [
                                 Container(
@@ -224,9 +227,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                   child:TextField(
                                     controller: usernameController,
                                     textAlignVertical: TextAlignVertical.center,
-                                    textCapitalization:
-                                    TextCapitalization.sentences,
-                                    keyboardType: TextInputType.name,
+
+                                    keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -274,11 +276,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ],
                                     ),
                                     child: TextField(
+                                      obscureText: true,
                                       controller: passwordController,
-                                      textAlignVertical: TextAlignVertical.center,
-                                      textCapitalization:
-                                      TextCapitalization.sentences,
-                                      keyboardType: TextInputType.visiblePassword,
+
+                                      keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         focusedBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -302,11 +303,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
                                     ),
                                 ),
-
-
-
-
-
                                 GestureDetector(
                                   onTap: () async {
                                     await _addUserData( usernameController.value.text, passwordController.value.text );
