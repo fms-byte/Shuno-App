@@ -238,24 +238,7 @@ class _HomePageState extends State<HomePage> {
                   stretch: true,
                   expandedHeight: MediaQuery.sizeOf(context).height * 0.2,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: RichText(
-                      text: TextSpan(
-                        text: AppLocalizations.of(context)!.appTitle,
-                        style: const TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: appVersion == null ? '' : '\nv$appVersion',
-                            style: const TextStyle(
-                              fontSize: 7.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
+
                     titlePadding: const EdgeInsets.only(bottom: 40.0),
                     centerTitle: true,
                     background: ShaderMask(

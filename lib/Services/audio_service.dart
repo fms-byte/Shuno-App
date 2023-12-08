@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/Helpers/mediaitem_converter.dart';
 import 'package:shuno/Helpers/playlist.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';

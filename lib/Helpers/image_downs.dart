@@ -2,7 +2,7 @@
 
 // import 'dart:io';
 
-// import 'package:shuno/APIs/api.dart';
+// 
 // import 'package:http/http.dart';
 
 // Future<void> getArtistImage({

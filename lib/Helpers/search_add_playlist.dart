@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';

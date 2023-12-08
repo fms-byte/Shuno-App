@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/Helpers/audio_query.dart';

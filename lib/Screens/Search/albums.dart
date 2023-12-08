@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/CustomWidgets/bouncy_sliver_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';

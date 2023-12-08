@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/Helpers/extensions.dart';
 import 'package:shuno/Helpers/image_resolution_modifier.dart';

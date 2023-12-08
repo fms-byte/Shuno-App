@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/bouncy_playlist_header_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';

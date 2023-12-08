@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/collage.dart';
 import 'package:shuno/CustomWidgets/horizontal_albumlist.dart';

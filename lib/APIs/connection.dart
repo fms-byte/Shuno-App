@@ -17,7 +17,7 @@ import 'package:logging/logging.dart';
 
 
 class BackendApi {
-  String ApiUrl = 'http://10.22.130.142:3000/api';
+  String ApiUrl = 'http://192.168.0.109:3000/api';
   //10.22.130.142
 
   List preferredLanguages = Hive.box('settings')

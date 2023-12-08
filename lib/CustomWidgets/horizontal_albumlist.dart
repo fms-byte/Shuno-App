@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/CustomWidgets/like_button.dart';
 import 'package:shuno/CustomWidgets/on_hover.dart';
