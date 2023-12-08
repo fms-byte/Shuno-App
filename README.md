@@ -1,5 +1,5 @@
 # Shuno App
-![](https://github.com/JHM69/Shuno-CMS/public/logo.png)
+![](https://github.com/JHM69/Shuno-CMS/blob/main/public/logo.png?raw=true)
 ## Summary
 We're building the ultimate audio listening app, Shuno (শুনো), which means "Listen" in English. As music lovers and Spotify enthusiasts, we envisioned an even better platform. Shuno combines Music, Podcasts, Audiobooks, Poem Recitations, and Audio Comics in one place. After months of hard work and dedication, our Minimum Viable Product (MVP) is ready!
 
