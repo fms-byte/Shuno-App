@@ -16,7 +16,7 @@ class Lyrics {
     required String id,
     required String title,
     required String artist,
-    required bool saavnHas,
+    required bool shunoHas,
   }) async {
     final Map<String, String> result = {
       'lyrics': '',
@@ -32,17 +32,17 @@ class Lyrics {
     result['source'] = res['source']!;
     if (result['lyrics'] == '') {
       Logger.root.info('Synced Lyrics, not found. Getting text lyrics');
-      if (saavnHas) {
-        Logger.root.info('Getting Lyrics from Saavn');
-        result['lyrics'] = await getSaavnLyrics(id);
+      if (shunoHas) {
+        Logger.root.info('Getting Lyrics from shuno');
+        result['lyrics'] = await getShunoLyrics(id);
         result['type'] = 'text';
-        result['source'] = 'Jiosaavn';
+        result['source'] = 'shuno';
         if (result['lyrics'] == '') {
           final res = await getLyrics(
             id: id,
             title: title,
             artist: artist,
-            saavnHas: false,
+            shunoHas: false,
           );
           result['lyrics'] = res['lyrics']!;
           result['type'] = res['type']!;
@@ -50,7 +50,7 @@ class Lyrics {
         }
       } else {
         Logger.root
-            .info('Lyrics not available on Saavn, finding on Musixmatch');
+            .info('Lyrics not available on shuno, finding on Musixmatch');
         result['lyrics'] =
             await getMusixMatchLyrics(title: title, artist: artist);
         result['type'] = 'text';
@@ -68,10 +68,10 @@ class Lyrics {
     return result;
   }
 
-  static Future<String> getSaavnLyrics(String id) async {
+  static Future<String> getShunoLyrics(String id) async {
     try {
       final Uri lyricsUrl = Uri.https(
-        'www.jiosaavn.com',
+        'www.shuno.com',
         '/api.php?__call=lyrics.getLyrics&lyrics_id=$id&ctx=web6dot0&api_version=4&_format=json',
       );
       final Response res =
@@ -88,7 +88,7 @@ class Lyrics {
           fetchedLyrics['lyrics'].toString().replaceAll('<br>', '\n');
       return lyrics;
     } catch (e) {
-      Logger.root.severe('Error in getSaavnLyrics', e);
+      Logger.root.severe('Error in getShunoLyrics', e);
       return '';
     }
   }

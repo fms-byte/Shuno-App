@@ -57,7 +57,7 @@ class ImportPlaylist extends StatelessWidget {
                                 ? AppLocalizations.of(
                                     context,
                                   )!
-                                    .importJioSaavn
+                                    .importShuno
                                 : AppLocalizations.of(
                                     context,
                                   )!
@@ -98,7 +98,7 @@ class ImportPlaylist extends StatelessWidget {
                                 settingsBox,
                               )
                             : index == 3
-                                ? importJioSaavn(
+                                ? importShuno(
                                     cntxt,
                                     playlistNames,
                                     settingsBox,
@@ -193,7 +193,7 @@ Future<void> importYt(
       if (data.isNotEmpty) {
         if (data['title'] == '' && data['count'] == 0) {
           Logger.root.severe(
-            'Failed to import YT playlist. Data not empty but title or the count is empty.',
+            'Failed to import playlist. Data not empty but title or the count is empty.',
           );
           ShowSnackBar().showSnackBar(
             context,
@@ -279,78 +279,9 @@ Future<void> importResso(
   );
 }
 
-Future<void> importSpotify(
-  BuildContext context,
-  String accessToken,
-  String playlistId,
-  String playlistName,
-  Box settingsBox,
-  List playlistNames,
-) async {
-  final Map data = await SearchAddPlaylist.addSpotifyPlaylist(
-    playlistName,
-    accessToken,
-    playlistId,
-  );
-  if (data.isNotEmpty) {
-    String playName = data['title'].toString();
-    while (playlistNames.contains(playName) || await Hive.boxExists(playName)) {
-      // ignore: use_string_buffers
-      playName = '$playName (1)';
-    }
-    playlistNames.add(playName);
-    settingsBox.put(
-      'playlistNames',
-      playlistNames,
-    );
 
-    await SearchAddPlaylist.showProgress(
-      data['count'] as int,
-      context,
-      SearchAddPlaylist.spotifySongsAdder(
-        playName,
-        data['tracks'] as List,
-      ),
-    );
-  } else {
-    Logger.root.severe(
-      'Failed to import Spotify playlist. Data is empty.',
-    );
-    ShowSnackBar().showSnackBar(
-      context,
-      AppLocalizations.of(context)!.failedImport,
-    );
-  }
-}
 
-Future<void> importSpotifyViaLink(
-  BuildContext context,
-  List playlistNames,
-  Box settingsBox,
-  String accessToken,
-) async {
-  showTextInputDialog(
-    context: context,
-    title: AppLocalizations.of(context)!.enterPlaylistLink,
-    initialText: '',
-    keyboardType: TextInputType.url,
-    onSubmitted: (String value, BuildContext context) async {
-      Navigator.pop(context);
-      final String playlistId = value.split('?')[0].split('/').last;
-      final playlistName = AppLocalizations.of(context)!.spotifyPublic;
-      await importSpotify(
-        context,
-        accessToken,
-        playlistId,
-        playlistName,
-        settingsBox,
-        playlistNames,
-      );
-    },
-  );
-}
-
-Future<void> importJioSaavn(
+Future<void> importShuno(
   BuildContext context,
   List playlistNames,
   Box settingsBox,
@@ -363,7 +294,7 @@ Future<void> importJioSaavn(
     onSubmitted: (String value, BuildContext context) async {
       final String link = value.trim();
       Navigator.pop(context);
-      final Map data = await SearchAddPlaylist.addJioSaavnPlaylist(
+      final Map data = await SearchAddPlaylist.addShunoPlaylist(
         link,
       );
 
@@ -372,7 +303,7 @@ Future<void> importJioSaavn(
         addPlaylist(playName, data['tracks'] as List);
         playlistNames.add(playName);
       } else {
-        Logger.root.severe('Failed to import JioSaavn playlist. data is empty');
+        Logger.root.severe('Failed to import Shuno playlist. data is empty');
         ShowSnackBar().showSnackBar(
           context,
           AppLocalizations.of(context)!.failedImport,
@@ -422,12 +353,7 @@ Future<void> fetchPlaylists(
                   ),
                 ),
                 onTap: () async {
-                  await importSpotifyViaLink(
-                    context,
-                    playlistNames,
-                    settingsBox,
-                    accessToken,
-                  );
+
                   Navigator.pop(context);
                 },
               );
@@ -462,14 +388,7 @@ Future<void> fetchPlaylists(
                       final String playlistId =
                           spotifyPlaylists[idx - 1]['id'].toString();
 
-                      importSpotify(
-                        context,
-                        accessToken,
-                        playlistId,
-                        playName,
-                        settingsBox,
-                        playlistNames,
-                      );
+
                     },
                   );
           },

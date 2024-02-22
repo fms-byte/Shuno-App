@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/CustomWidgets/like_button.dart';
 import 'package:shuno/CustomWidgets/on_hover.dart';
@@ -10,6 +10,8 @@ import 'package:shuno/Models/image_quality.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../APIs/connection.dart';
 
 class HorizontalAlbumsList extends StatelessWidget {
   final List songsList;
@@ -215,7 +217,7 @@ class HorizontalAlbumsList extends StatelessWidget {
                                             .connectingRadio,
                                         duration: const Duration(seconds: 2),
                                       );
-                                      SaavnAPI().createRadio(
+                                      BackendApi().createRadio(
                                         names: [
                                           item['title']?.toString() ?? '',
                                         ],
@@ -225,7 +227,7 @@ class HorizontalAlbumsList extends StatelessWidget {
                                         stationType: 'artist',
                                       ).then((value) {
                                         if (value != null) {
-                                          SaavnAPI()
+                                          BackendApi()
                                               .getRadioSongs(stationId: value)
                                               .then((value) {
                                             PlayerInvoke.init(

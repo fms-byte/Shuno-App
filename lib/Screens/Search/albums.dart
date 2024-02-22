@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/CustomWidgets/bouncy_sliver_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
@@ -11,6 +11,8 @@ import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Search/artists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../APIs/connection.dart';
 
 class AlbumSearchPage extends StatefulWidget {
   final String query;
@@ -56,7 +58,7 @@ class _AlbumSearchPageState extends State<AlbumSearchPage> {
     loading = true;
     switch (widget.type) {
       case 'Playlists':
-        SaavnAPI()
+        BackendApi()
             .fetchAlbums(
           searchQuery: widget.query,
           type: 'playlist',
@@ -72,7 +74,7 @@ class _AlbumSearchPageState extends State<AlbumSearchPage> {
         });
         break;
       case 'Albums':
-        SaavnAPI()
+        BackendApi()
             .fetchAlbums(
           searchQuery: widget.query,
           type: 'album',
@@ -88,7 +90,7 @@ class _AlbumSearchPageState extends State<AlbumSearchPage> {
         });
         break;
       case 'Artists':
-        SaavnAPI()
+        BackendApi()
             .fetchAlbums(
           searchQuery: widget.query,
           type: 'artist',

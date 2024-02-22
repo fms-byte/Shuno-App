@@ -1269,7 +1269,7 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
         if (value == '' && widget.getLyricsOnline) {
           Lyrics.getLyrics(
             id: widget.mediaItem.id,
-            saavnHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
+            shunoHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
             title: widget.mediaItem.title,
             artist: widget.mediaItem.artist.toString(),
           ).then((Map value) {
@@ -1299,7 +1299,7 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
     } else {
       Lyrics.getLyrics(
         id: widget.mediaItem.id,
-        saavnHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
+        shunoHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
         title: widget.mediaItem.title,
         artist: widget.mediaItem.artist.toString(),
       ).then((Map value) {

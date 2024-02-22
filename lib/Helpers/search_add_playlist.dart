@@ -2,7 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:shuno/APIs/api.dart';
+
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/Helpers/playlist.dart';
@@ -106,12 +107,12 @@ class SearchAddPlaylist {
     return res['tracks'] as List;
   }
 
-  static Future<Map> addJioSaavnPlaylist(String inLink) async {
+  static Future<Map> addShunoPlaylist(String inLink) async {
     try {
       final String id = inLink.split('/').last;
       if (id != '') {
         final Map data =
-            await SaavnAPI().getSongFromToken(id, 'playlist', n: -1);
+            await BackendApi().getSongFromToken(id, 'playlist', n: -1);
         return {
           'title': data['title'],
           'count': data['list'].length,
@@ -120,7 +121,7 @@ class SearchAddPlaylist {
       }
       return {};
     } catch (e) {
-      Logger.root.severe('Error while adding JioSaavn playlist: $e');
+      Logger.root.severe('Error while adding Shuno playlist: $e');
       return {};
     }
   }
@@ -137,7 +138,7 @@ class SearchAddPlaylist {
       }
       try {
         final List result =
-            await SaavnAPI().fetchTopSearchResult(trackName!.split('|')[0]);
+            await BackendApi().fetchTopSearchResult(trackName!.split('|')[0]);
         addMapToPlaylist(playName, result[0] as Map);
       } catch (e) {
         Logger.root.severe('Error in $done: $e');
@@ -162,7 +163,7 @@ class SearchAddPlaylist {
       }
       try {
         final List result =
-            await SaavnAPI().fetchTopSearchResult('$trackName by $artistName');
+            await BackendApi().fetchTopSearchResult('$trackName by $artistName');
         addMapToPlaylist(playName, result[0] as Map);
       } catch (e) {
         Logger.root.severe('Error in $done: $e');
@@ -188,7 +189,7 @@ class SearchAddPlaylist {
       }
       try {
         final List result =
-            await SaavnAPI().fetchTopSearchResult('$trackName by $artistName');
+            await BackendApi().fetchTopSearchResult('$trackName by $artistName');
         addMapToPlaylist(playName, result[0] as Map);
       } catch (e) {
         Logger.root.severe('Error in $done: $e');

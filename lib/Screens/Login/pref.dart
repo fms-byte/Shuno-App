@@ -29,8 +29,6 @@ class _PrefScreenState extends State<PrefScreen> {
       .get('preferredLanguage', defaultValue: ['Bengali'])?.toList() as List;
   String region =
       Hive.box('settings').get('region', defaultValue: 'Bangladesh') as String;
-  bool useProxy =
-      Hive.box('settings').get('useProxy', defaultValue: false) as bool;
 
   @override
   Widget build(BuildContext context) {
@@ -445,7 +443,7 @@ class _PrefScreenState extends State<PrefScreen> {
                                                       Navigator.pop(
                                                         context,
                                                       );
-                                                      if (region != 'India') {
+                                                      if (region != 'Bangladesh') {
                                                         ShowSnackBar()
                                                             .showSnackBar(
                                                           context,
@@ -457,25 +455,7 @@ class _PrefScreenState extends State<PrefScreen> {
                                                               const Duration(
                                                             seconds: 10,
                                                           ),
-                                                          action:
-                                                              SnackBarAction(
-                                                            textColor: Theme.of(
-                                                              context,
-                                                            )
-                                                                .colorScheme
-                                                                .secondary,
-                                                            label: AppLocalizations
-                                                                    .of(context)!
-                                                                .useProxy,
-                                                            onPressed: () {
-                                                              Hive.box(
-                                                                'settings',
-                                                              ).put(
-                                                                'useProxy',
-                                                                true,
-                                                              );
-                                                            },
-                                                          ),
+
                                                         );
                                                       }
                                                       setState(() {});
@@ -492,29 +472,7 @@ class _PrefScreenState extends State<PrefScreen> {
                                   const SizedBox(
                                     height: 20.0,
                                   ),
-                                  Visibility(
-                                    visible: region != 'India',
-                                    child: BoxSwitchTile(
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!
-                                            .useProxy,
-                                      ),
-                                      keyName: 'useProxy',
-                                      defaultValue: false,
-                                      contentPadding: EdgeInsets.zero,
-                                      onChanged: ({
-                                        required bool val,
-                                        required Box box,
-                                      }) {
-                                        useProxy = val;
-                                        setState(
-                                          () {},
-                                        );
-                                      },
-                                    ),
-                                  ),
+
                                   const SizedBox(
                                     height: 20.0,
                                   ),

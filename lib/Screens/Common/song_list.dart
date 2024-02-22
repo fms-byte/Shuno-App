@@ -2,7 +2,8 @@
 
 import 'dart:async';
 
-import 'package:shuno/APIs/api.dart';
+
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/bouncy_playlist_header_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
@@ -67,7 +68,7 @@ class _SongsListPageState extends State<SongsListPage> {
     try {
       switch (widget.listItem['type'].toString()) {
         case 'songs':
-          SaavnAPI()
+          BackendApi()
               .fetchSongSearchResults(
             searchQuery: widget.listItem['id'].toString(),
             page: page,
@@ -88,9 +89,10 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'album':
-          SaavnAPI()
+          BackendApi()
               .fetchAlbumSongs(widget.listItem['id'].toString())
               .then((value) {
+
             setState(() {
               songList = value['songs'] as List;
               fetched = true;
@@ -106,7 +108,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'playlist':
-          SaavnAPI()
+          BackendApi()
               .fetchPlaylistSongs(widget.listItem['id'].toString())
               .then((value) {
             setState(() {
@@ -124,7 +126,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'mix':
-          SaavnAPI()
+          BackendApi()
               .getSongFromToken(
             widget.listItem['perma_url'].toString().split('/').last,
             'mix',
@@ -146,7 +148,7 @@ class _SongsListPageState extends State<SongsListPage> {
           });
           break;
         case 'show':
-          SaavnAPI()
+          BackendApi()
               .getSongFromToken(
             widget.listItem['perma_url'].toString().split('/').last,
             'show',
@@ -232,7 +234,7 @@ class _SongsListPageState extends State<SongsListPage> {
                 ],
                 title:
                     widget.listItem['title']?.toString().unescape() ?? 'Songs',
-                subtitle: '${songList.length} Songs',
+                subtitle: '${songList.length} Items',
                 secondarySubtitle: widget.listItem['subTitle']?.toString() ??
                     widget.listItem['subtitle']?.toString(),
                 onPlayTap: () => PlayerInvoke.init(
@@ -259,7 +261,7 @@ class _SongsListPageState extends State<SongsListPage> {
                           bottom: 5.0,
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!.songs,
+                          'Contents',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,

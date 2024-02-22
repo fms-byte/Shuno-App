@@ -1,13 +1,13 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/Helpers/audio_query.dart';
 import 'package:shuno/Helpers/spotify_helper.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Screens/Search/search.dart';
-import 'package:shuno/Screens/YouTube/youtube_playlist.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:shuno/Services/youtube_services.dart';
 import 'package:flutter/material.dart';
@@ -19,25 +19,25 @@ class HandleRoute {
   static Route? handleRoute(String? url) {
     Logger.root.info('received route url: $url');
     if (url == null) return null;
-    if (url.contains('saavn')) {
+    if (url.contains('shuno')) {
       final RegExpMatch? songResult =
-          RegExp(r'.*saavn.com.*?\/(song)\/.*?\/(.*)').firstMatch('$url?');
+          RegExp(r'.*shuno.com.*?\/(song)\/.*?\/(.*)').firstMatch('$url?');
       if (songResult != null) {
         return PageRouteBuilder(
           opaque: false,
-          pageBuilder: (_, __, ___) => SaavnUrlHandler(
+          pageBuilder: (_, __, ___) => ShunoUrlHandler(
             token: songResult[2]!,
             type: songResult[1]!,
           ),
         );
       } else {
         final RegExpMatch? playlistResult = RegExp(
-          r'.*saavn.com\/?s?\/(featured|playlist|album)\/.*\/(.*_)?[?/]',
+          r'.*shuno.com\/?s?\/(featured|playlist|album)\/.*\/(.*_)?[?/]',
         ).firstMatch('$url?');
         if (playlistResult != null) {
           return PageRouteBuilder(
             opaque: false,
-            pageBuilder: (_, __, ___) => SaavnUrlHandler(
+            pageBuilder: (_, __, ___) => ShunoUrlHandler(
               token: playlistResult[2]!,
               type: playlistResult[1]!,
             ),
@@ -88,14 +88,14 @@ class HandleRoute {
   }
 }
 
-class SaavnUrlHandler extends StatelessWidget {
+class ShunoUrlHandler extends StatelessWidget {
   final String token;
   final String type;
-  const SaavnUrlHandler({super.key, required this.token, required this.type});
+  const ShunoUrlHandler({super.key, required this.token, required this.type});
 
   @override
   Widget build(BuildContext context) {
-    SaavnAPI().getSongFromToken(token, type).then((value) {
+    BackendApi().getSongFromToken(token, type).then((value) {
       if (type == 'song') {
         PlayerInvoke.init(
           songsList: value['songs'] as List,
@@ -179,21 +179,6 @@ class YtUrlHandler extends StatelessWidget {
           PageRouteBuilder(
             opaque: false,
             pageBuilder: (_, __, ___) => const PlayScreen(),
-          ),
-        );
-      });
-    } else if (type == 'list') {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => YouTubePlaylist(
-              playlistId: id,
-              // playlistImage: '',
-              // playlistName: '',
-              // playlistSubtitle: '',
-              // playlistSecondarySubtitle: '',
-            ),
           ),
         );
       });

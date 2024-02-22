@@ -1,6 +1,6 @@
 //Shuno
 
-import 'package:shuno/APIs/api.dart';
+
 import 'package:shuno/CustomWidgets/artist_like_button.dart';
 import 'package:shuno/CustomWidgets/bouncy_sliver_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
@@ -19,6 +19,8 @@ import 'package:shuno/Services/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../APIs/connection.dart';
 
 class ArtistSearchPage extends StatefulWidget {
   final Map data;
@@ -50,7 +52,7 @@ class _ArtistSearchPageState extends State<ArtistSearchPage> {
   Widget build(BuildContext context) {
     if (!status) {
       status = true;
-      SaavnAPI()
+      BackendApi()
           .fetchArtistSongs(
         artistToken: widget.data['artistToken'].toString(),
         category: category,
@@ -202,7 +204,7 @@ class _ArtistSearchPageState extends State<ArtistSearchPage> {
                                           seconds: 2,
                                         ),
                                       );
-                                      SaavnAPI().createRadio(
+                                      BackendApi().createRadio(
                                         names: [
                                           widget.data['title']?.toString() ??
                                               '',
@@ -213,7 +215,7 @@ class _ArtistSearchPageState extends State<ArtistSearchPage> {
                                         stationType: 'artist',
                                       ).then((value) {
                                         if (value != null) {
-                                          SaavnAPI()
+                                          BackendApi()
                                               .getRadioSongs(
                                             stationId: value,
                                           )

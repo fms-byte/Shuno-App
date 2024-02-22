@@ -3,7 +3,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:shuno/APIs/api.dart';
+
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/Helpers/extensions.dart';
 import 'package:shuno/Helpers/image_resolution_modifier.dart';
 import 'package:dart_des/dart_des.dart';
@@ -30,6 +31,7 @@ class FormatResponse {
     List responseList,
     String type,
   ) async {
+    BackendApi.printError(type);
     final List searchedList = [];
     for (int i = 0; i < responseList.length; i++) {
       Map? response;
@@ -55,79 +57,47 @@ class FormatResponse {
         }
       }
     }
+    BackendApi.printError(searchedList);
+
     return searchedList;
   }
 
   static Future<Map> formatSingleSongResponse(Map response) async {
-    // Map cachedSong = Hive.box('cache').get(response['id']);
-    // if (cachedSong != null) {
-    //   return cachedSong;
-    // }
+    BackendApi.printError(response);
     try {
       final List artistNames = [];
-      if (response['more_info']?['artistMap'] == false ||
-          response['more_info']?['artistMap']?['primary_artists'] == null ||
-          response['more_info']?['artistMap']?['primary_artists'].length == 0) {
-        if (response['more_info']?['artistMap'] == false ||
-            response['more_info']?['artistMap']?['featured_artists'] == null ||
-            response['more_info']?['artistMap']?['featured_artists']?.length ==
-                0) {
-          if (response['more_info']?['artistMap'] == false ||
-              response['more_info']?['artistMap']?['artists'] == null ||
-              response['more_info']?['artistMap']?['artists']?.length == 0) {
-            if (response['more_info']?['music'] != null) {
-              artistNames.add(response['more_info']['music']);
-            } else {
-              artistNames.add('Unknown');
-            }
-          } else {
-            try {
-              response['more_info']['artistMap']['artists'][0]['id']
-                  .forEach((element) {
-                artistNames.add(element['name']);
-              });
-            } catch (e) {
-              response['more_info']['artistMap']['artists'].forEach((element) {
-                artistNames.add(element['name']);
-              });
-            }
-          }
-        } else {
-          response['more_info']['artistMap']['featured_artists']
-              .forEach((element) {
-            artistNames.add(element['name']);
-          });
-        }
-      } else {
-        response['more_info']['artistMap']['primary_artists']
+
+
+      if(response['primaryArtists'] != null){
+        response['primaryArtists']
             .forEach((element) {
           artistNames.add(element['name']);
         });
       }
 
       return {
-        'id': response['id'],
-        'type': response['type'],
-        'album': response['more_info']['album'].toString().unescape(),
+        'id': response['slug'],
+        'type': response['contentType'],
+        'album': response['album'].toString().unescape(),
         'year': response['year'],
-        'duration': response['more_info']['duration'],
+        'duration': response['duration'],
         'language': response['language'].toString().capitalize(),
         'genre': response['language'].toString().capitalize(),
-        '320kbps': response['more_info']['320kbps'],
-        'has_lyrics': response['more_info']['has_lyrics'],
+        '320kbps': response['kbps320'] as bool ? "true" : "false",
+        'has_lyrics': response['hasLyrics'],
         'lyrics_snippet':
-            response['more_info']['lyrics_snippet'].toString().unescape(),
-        'release_date': response['more_info']['release_date'],
-        'album_id': response['more_info']['album_id'],
-        'subtitle': response['subtitle'].toString().unescape(),
-        'title': response['title'].toString().unescape(),
+            response['lyricsSnippet'].toString().unescape(),
+        'release_date': response['releaseDate'],
+        'album_id': response['albumId'],
+        'subtitle': response['label'].toString().unescape(),
+        'title': response['name'].toString().unescape(),
         'artist': artistNames.join(', ').unescape(),
-        'album_artist': response['more_info'] == null
+        'album_artist': response == null
             ? response['music']
-            : response['more_info']['music'],
-        'image': getImageUrl(response['image'].toString()),
-        'perma_url': response['perma_url'],
-        'url': decode(response['more_info']['encrypted_media_url'].toString()),
+            : response['music'],
+        'image': response['primaryImage'],
+        'perma_url': response['permaUrl'],
+        'url': response['url'].toString(),
       };
       // Hive.box('cache').put(response['id'].toString(), info);
     } catch (e) {
@@ -482,37 +452,38 @@ class FormatResponse {
         data['new_albums'] =
             await formatSongsInList(data['new_albums'] as List);
       }
-      if (data['city_mod'] != null) {
-        data['city_mod'] = await formatSongsInList(data['city_mod'] as List);
-      }
-      final List promoList = [];
-      final List promoListTemp = [];
-      data['modules'].forEach((k, v) {
-        if (k.startsWith('promo') as bool) {
-          if (data[k][0]['type'] == 'song' &&
-              (data[k][0]['mini_obj'] as bool? ?? false)) {
-            promoListTemp.add(k.toString());
-          } else {
-            promoList.add(k.toString());
-          }
-        }
-      });
-      for (int i = 0; i < promoList.length; i++) {
-        data[promoList[i]] =
-            await formatSongsInList(data[promoList[i]] as List);
-      }
+      // if (data['city_mod'] != null) {
+      //   data['city_mod'] = await formatSongsInList(data['city_mod'] as List);
+      // }
+      // final List promoList = [];
+      // final List promoListTemp = [];
+      // data['modules'].forEach((k, v) {
+      //   if (k.startsWith('promo') as bool) {
+      //     if (data[k][0]['type'] == 'song' &&
+      //         (data[k][0]['mini_obj'] as bool? ?? false)) {
+      //       promoListTemp.add(k.toString());
+      //     } else {
+      //       promoList.add(k.toString());
+      //     }
+      //   }
+      // });
+      // for (int i = 0; i < promoList.length; i++) {
+      //   data[promoList[i]] =
+      //       await formatSongsInList(data[promoList[i]] as List);
+      // }
       data['collections'] = [
-        'new_trending',
-        'charts',
         'new_albums',
-        'tag_mixes',
-        'top_playlists',
-        'radio',
-        'city_mod',
-        'artist_recos',
-        ...promoList,
+        'new_trending',
+        // 'charts',
+        // 'new_albums',
+        // 'tag_mixes',
+        // 'top_playlists',
+        // 'radio',
+        // 'city_mod',
+        // 'artist_recos',
+        // ...promoList,
       ];
-      data['collections_temp'] = promoListTemp;
+     // data['collections_temp'] = promoListTemp;
     } catch (e) {
       Logger.root.severe('Error inside formatHomePageData: $e');
     }
@@ -544,7 +515,7 @@ class FormatResponse {
                 .get(item['id'].toString(), defaultValue: {}) as Map;
             if (cachedDetails.isEmpty) {
               cachedDetails =
-                  await SaavnAPI().fetchSongDetails(item['id'].toString());
+                  await BackendApi().fetchSongDetails(item['id'].toString());
               Hive.box('cache')
                   .put(cachedDetails['id'].toString(), cachedDetails);
             }
