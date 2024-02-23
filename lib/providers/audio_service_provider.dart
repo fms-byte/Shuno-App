@@ -1,9 +1,9 @@
 //Shuno
 
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Services/audio_service.dart';
-import 'package:flutter/material.dart';
 
 class AudioHandlerHelper {
   static final AudioHandlerHelper _instance = AudioHandlerHelper._internal();

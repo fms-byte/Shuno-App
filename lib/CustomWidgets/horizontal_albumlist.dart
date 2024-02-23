@@ -1,6 +1,9 @@
 //Shuno
 
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/CustomWidgets/like_button.dart';
 import 'package:shuno/CustomWidgets/on_hover.dart';
@@ -8,10 +11,6 @@ import 'package:shuno/CustomWidgets/snackbar.dart';
 import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:shuno/Models/image_quality.dart';
 import 'package:shuno/Services/player_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../APIs/connection.dart';
 
 class HorizontalAlbumsList extends StatelessWidget {
   final List songsList;

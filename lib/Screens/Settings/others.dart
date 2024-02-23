@@ -1,5 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shuno/CustomWidgets/box_switch_tile.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/snackbar.dart';
@@ -7,12 +13,6 @@ import 'package:shuno/CustomWidgets/textinput_dialog.dart';
 import 'package:shuno/Helpers/picker.dart';
 import 'package:shuno/constants/languagecodes.dart';
 import 'package:shuno/main.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 class OthersPage extends StatefulWidget {
   const OthersPage({super.key});

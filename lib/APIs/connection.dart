@@ -1,18 +1,12 @@
 //Shuno
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_launcher_icons/utils.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:logging/logging.dart';
-import 'dart:convert';
-import 'package:shuno/Helpers/format.dart';
-import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:logging/logging.dart';
+import 'package:shuno/Helpers/format.dart';
 
 
 
@@ -662,9 +656,9 @@ class BackendApi {
 
   Future<Map> fetchSongDetails(String slug) async {
 
-    print("-------------------------------------");
+    print('-------------------------------------');
     print(slug);
-    print("-------------------------------------");
+    print('-------------------------------------');
 
     try {
       final Uri url = Uri.parse('${BackendApi().ApiUrl}/song/$slug'); // Convert the URL to a Uri object

@@ -1,6 +1,10 @@
 //Shuno
 
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/artist_like_button.dart';
 import 'package:shuno/CustomWidgets/bouncy_sliver_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
@@ -16,11 +20,6 @@ import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:shuno/Models/url_image_generator.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Services/player_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:share_plus/share_plus.dart';
-
-import '../../APIs/connection.dart';
 
 class ArtistSearchPage extends StatefulWidget {
   final Map data;

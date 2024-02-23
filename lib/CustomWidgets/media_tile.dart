@@ -1,7 +1,7 @@
 //Shuno
 
-import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 
 class MediaTile extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;

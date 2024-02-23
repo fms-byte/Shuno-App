@@ -1,15 +1,12 @@
-import 'package:shuno/CustomWidgets/copy_clipboard.dart';
-import 'package:shuno/CustomWidgets/gradient_containers.dart';
-import 'package:shuno/CustomWidgets/snackbar.dart';
-import 'package:shuno/Helpers/github.dart';
-import 'package:shuno/Helpers/update.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:shuno/CustomWidgets/gradient_containers.dart';
+import 'package:shuno/CustomWidgets/snackbar.dart';
+import 'package:shuno/Helpers/github.dart';
+import 'package:shuno/Helpers/update.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {

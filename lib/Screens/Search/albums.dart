@@ -1,6 +1,9 @@
 //Shuno
 
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/bouncy_sliver_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
@@ -9,10 +12,6 @@ import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Search/artists.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../APIs/connection.dart';
 
 class AlbumSearchPage extends StatefulWidget {
   final String query;

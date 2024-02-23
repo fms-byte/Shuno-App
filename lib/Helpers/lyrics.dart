@@ -4,11 +4,11 @@ import 'dart:convert';
 
 import 'package:audiotagger/audiotagger.dart';
 import 'package:audiotagger/models/tag.dart';
+import 'package:http/http.dart';
+import 'package:logging/logging.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/Helpers/matcher.dart';
 import 'package:shuno/Helpers/spotify_helper.dart';
-import 'package:http/http.dart';
-import 'package:logging/logging.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Lyrics {

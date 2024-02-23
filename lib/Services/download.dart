@@ -4,9 +4,6 @@ import 'dart:io';
 
 import 'package:audiotagger/audiotagger.dart';
 import 'package:audiotagger/models/tag.dart';
-import 'package:shuno/CustomWidgets/snackbar.dart';
-import 'package:shuno/Helpers/lyrics.dart';
-import 'package:shuno/Services/ext_storage_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
@@ -17,6 +14,9 @@ import 'package:logging/logging.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shuno/CustomWidgets/snackbar.dart';
+import 'package:shuno/Helpers/lyrics.dart';
+import 'package:shuno/Services/ext_storage_provider.dart';
 
 class Download with ChangeNotifier {
   static final Map<String, Download> _instances = {};

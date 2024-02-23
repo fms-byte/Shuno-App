@@ -2,6 +2,13 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:logging/logging.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shuno/CustomWidgets/bottom_nav_bar.dart';
 import 'package:shuno/CustomWidgets/drawer.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
@@ -20,13 +27,6 @@ import 'package:shuno/Screens/LocalMusic/downed_songs_desktop.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Screens/Settings/new_settings_page.dart';
 import 'package:shuno/Services/ext_storage_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:logging/logging.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -238,7 +238,6 @@ class _HomePageState extends State<HomePage> {
                   stretch: true,
                   expandedHeight: MediaQuery.sizeOf(context).height * 0.2,
                   flexibleSpace: FlexibleSpaceBar(
-
                     titlePadding: const EdgeInsets.only(bottom: 40.0),
                     centerTitle: true,
                     background: ShaderMask(
@@ -561,7 +560,6 @@ class _HomePageState extends State<HomePage> {
                     case 'Home':
                       return const SafeArea(child: HomeScreen());
                     case 'Library':
-
                       return const LibraryPage();
                     default:
                       return NewSettingsPage(callback: callback);

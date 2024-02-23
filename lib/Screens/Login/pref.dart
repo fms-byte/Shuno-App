@@ -1,15 +1,14 @@
 //Shuno
 
-import 'package:shuno/CustomWidgets/box_switch_tile.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/snackbar.dart';
 import 'package:shuno/Helpers/backup_restore.dart';
 import 'package:shuno/Helpers/config.dart';
 import 'package:shuno/constants/countrycodes.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:sizer/sizer.dart';
 
 class PrefScreen extends StatefulWidget {

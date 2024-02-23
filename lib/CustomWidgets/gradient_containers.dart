@@ -1,8 +1,8 @@
 //Shuno
 
-import 'package:shuno/Helpers/config.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shuno/Helpers/config.dart';
 
 class GradientContainer extends StatefulWidget {
   final Widget? child;
