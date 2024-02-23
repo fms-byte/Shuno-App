@@ -1,13 +1,12 @@
 //Shuno
 
 
-import 'package:shuno/CustomWidgets/snackbar.dart';
-import 'package:shuno/Services/download.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
-
-import '../APIs/connection.dart';
+import 'package:shuno/APIs/connection.dart';
+import 'package:shuno/CustomWidgets/snackbar.dart';
+import 'package:shuno/Services/download.dart';
 
 class DownloadButton extends StatefulWidget {
   final Map data;

@@ -2,7 +2,11 @@
 
 import 'dart:io';
 
-
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:logging/logging.dart';
+import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
 import 'package:shuno/CustomWidgets/empty_screen.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
@@ -20,12 +24,6 @@ import 'package:shuno/Screens/Search/artists.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:shuno/Services/youtube_services.dart';
 import 'package:shuno/Services/yt_music.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
-import 'package:logging/logging.dart';
-
-import '../../APIs/connection.dart';
 
 class SearchPage extends StatefulWidget {
   final String query;

@@ -1,5 +1,5 @@
-import 'package:shuno/Models/image_quality.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shuno/Models/image_quality.dart';
 
 class UrlImageGetter {
   final List<String?> _imageUrls;

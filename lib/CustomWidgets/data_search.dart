@@ -1,14 +1,14 @@
 //Shuno
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:shuno/CustomWidgets/download_button.dart';
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:shuno/Helpers/audio_query.dart';
 import 'package:shuno/Services/player_service.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 class DataSearch extends SearchDelegate {
   final List<SongModel> data;

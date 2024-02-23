@@ -6,12 +6,6 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
-
-import 'package:shuno/Helpers/mediaitem_converter.dart';
-import 'package:shuno/Helpers/playlist.dart';
-import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/Services/isolate_service.dart';
-import 'package:shuno/Services/yt_music.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -19,8 +13,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
-
-import '../APIs/connection.dart';
+import 'package:shuno/APIs/connection.dart';
+import 'package:shuno/Helpers/mediaitem_converter.dart';
+import 'package:shuno/Helpers/playlist.dart';
+import 'package:shuno/Screens/Player/audioplayer.dart';
+import 'package:shuno/Services/isolate_service.dart';
+import 'package:shuno/Services/yt_music.dart';
 
 class AudioPlayerHandlerImpl extends BaseAudioHandler
     with QueueHandler, SeekHandler

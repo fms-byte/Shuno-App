@@ -1,6 +1,9 @@
 //Shuno
 
 
+import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/APIs/spotify_api.dart';
 import 'package:shuno/Helpers/audio_query.dart';
@@ -10,9 +13,6 @@ import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Screens/Search/search.dart';
 import 'package:shuno/Services/player_service.dart';
 import 'package:shuno/Services/youtube_services.dart';
-import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class HandleRoute {

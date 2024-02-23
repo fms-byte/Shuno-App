@@ -3,15 +3,15 @@
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:shuno/Helpers/mediaitem_converter.dart';
-import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/Services/youtube_services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shuno/Helpers/mediaitem_converter.dart';
+import 'package:shuno/Screens/Player/audioplayer.dart';
+import 'package:shuno/Services/youtube_services.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class PlayerInvoke {

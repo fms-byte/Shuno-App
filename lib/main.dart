@@ -3,17 +3,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:shuno/Helpers/config.dart';
-import 'package:shuno/Helpers/handle_native.dart';
-import 'package:shuno/Helpers/import_export_playlist.dart';
-import 'package:shuno/Helpers/logging.dart';
-import 'package:shuno/Helpers/route_handler.dart';
-import 'package:shuno/Screens/Common/routes.dart';
-import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/constants/constants.dart';
-import 'package:shuno/constants/languagecodes.dart';
-import 'package:shuno/providers/audio_service_provider.dart';
-import 'package:shuno/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -26,6 +15,17 @@ import 'package:logging/logging.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:shuno/Helpers/config.dart';
+import 'package:shuno/Helpers/handle_native.dart';
+import 'package:shuno/Helpers/import_export_playlist.dart';
+import 'package:shuno/Helpers/logging.dart';
+import 'package:shuno/Helpers/route_handler.dart';
+import 'package:shuno/Screens/Common/routes.dart';
+import 'package:shuno/Screens/Player/audioplayer.dart';
+import 'package:shuno/constants/constants.dart';
+import 'package:shuno/constants/languagecodes.dart';
+import 'package:shuno/providers/audio_service_provider.dart';
+import 'package:shuno/theme/app_theme.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> main() async {

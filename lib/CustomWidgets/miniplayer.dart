@@ -1,12 +1,12 @@
 //Shuno
 
 import 'package:audio_service/audio_service.dart';
-import 'package:shuno/CustomWidgets/gradient_containers.dart';
-import 'package:shuno/CustomWidgets/image_card.dart';
-import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shuno/CustomWidgets/gradient_containers.dart';
+import 'package:shuno/CustomWidgets/image_card.dart';
+import 'package:shuno/Screens/Player/audioplayer.dart';
 
 class MiniPlayer extends StatefulWidget {
   static const MiniPlayer _instance = MiniPlayer._internal();

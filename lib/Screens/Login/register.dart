@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<Register> {
       'user': {
         'email': email,
         'pass': password,
-        'username' : username
+        'username' : username,
       },
     };
 
@@ -237,6 +237,7 @@ class _RegisterScreenState extends State<Register> {
                                       textCapitalization:
                                       TextCapitalization.sentences,
                                       keyboardType: TextInputType.name,
+                                      style: const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         focusedBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -256,7 +257,7 @@ class _RegisterScreenState extends State<Register> {
                                           color: Colors.white60,
                                         ),
                                       ),
-                                    )
+                                    ),
                                 ),
 
                                 Container(
@@ -287,6 +288,7 @@ class _RegisterScreenState extends State<Register> {
                                       textCapitalization:
                                       TextCapitalization.sentences,
                                       keyboardType: TextInputType.name,
+                                      style: const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         focusedBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -307,7 +309,7 @@ class _RegisterScreenState extends State<Register> {
                                         ),
                                       ),
 
-                                    )
+                                    ),
                                 ),
 
                                 Container(
@@ -333,11 +335,13 @@ class _RegisterScreenState extends State<Register> {
                                     ],
                                   ),
                                   child: TextField(
+                                    obscureText: true,
                                     controller: passwordController,
                                     textAlignVertical: TextAlignVertical.center,
                                     textCapitalization:
                                     TextCapitalization.sentences,
                                     keyboardType: TextInputType.visiblePassword,
+                                    style: const TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
                                       focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(

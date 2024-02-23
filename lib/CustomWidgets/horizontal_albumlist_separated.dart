@@ -1,9 +1,9 @@
 //Shuno
 
+import 'package:flutter/material.dart';
 import 'package:shuno/CustomWidgets/custom_physics.dart';
 import 'package:shuno/CustomWidgets/image_card.dart';
 import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
-import 'package:flutter/material.dart';
 
 class HorizontalAlbumsListSeparated extends StatelessWidget {
   final List songsList;

@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:shuno/Models/image_quality.dart';
-import 'package:shuno/Models/url_image_generator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shuno/Models/image_quality.dart';
+import 'package:shuno/Models/url_image_generator.dart';
 
 Widget imageCard({
   required String imageUrl,

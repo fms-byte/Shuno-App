@@ -2,7 +2,10 @@
 
 import 'dart:async';
 
-
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/bouncy_playlist_header_scroll_view.dart';
 import 'package:shuno/CustomWidgets/copy_clipboard.dart';
@@ -16,10 +19,6 @@ import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:shuno/Helpers/extensions.dart';
 import 'package:shuno/Models/url_image_generator.dart';
 import 'package:shuno/Services/player_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:logging/logging.dart';
-import 'package:share_plus/share_plus.dart';
 
 class SongsListPage extends StatefulWidget {
   final Map listItem;

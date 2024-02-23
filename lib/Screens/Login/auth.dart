@@ -171,12 +171,12 @@ class _AuthScreenState extends State<AuthScreen> {
                               height: 230,
 
                               child: Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Container(
                                     color: Colors.white, // Add a background color if necessary
-                                    child: Image(
+                                    child: const Image(
                                       image: AssetImage(
                                         'assets/ic_launcher.png',
                                       ),
@@ -185,21 +185,24 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 40,),
                             Column(
                               children: [
                                 SizedBox(
 
-                                  width: MediaQuery.sizeOf(context).width,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 30,
                                   child: Text(
-                                    'Enter your username & password',
+                                    'Enter your Username & Password',
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.primary,
-                                      fontSize: 18.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
+                                const SizedBox(height: 20,),
                               ],
                             ),
 
@@ -229,6 +232,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     textAlignVertical: TextAlignVertical.center,
 
                                     keyboardType: TextInputType.text,
+                                    style: const TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
                                       focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -250,7 +254,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                     ),
 
-                                  )
+                                  ),
                                 ),
 
                                 Container(
@@ -280,6 +284,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       controller: passwordController,
 
                                       keyboardType: TextInputType.text,
+                                      style: const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         focusedBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(

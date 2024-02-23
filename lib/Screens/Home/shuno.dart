@@ -2,7 +2,9 @@
 
 import 'dart:io';
 
-
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shuno/APIs/connection.dart';
 import 'package:shuno/CustomWidgets/collage.dart';
 import 'package:shuno/CustomWidgets/horizontal_albumlist.dart';
@@ -13,15 +15,11 @@ import 'package:shuno/CustomWidgets/on_hover.dart';
 import 'package:shuno/CustomWidgets/snackbar.dart';
 import 'package:shuno/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:shuno/Helpers/extensions.dart';
-import 'package:shuno/Helpers/format.dart';
 import 'package:shuno/Models/image_quality.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Library/liked.dart';
 import 'package:shuno/Screens/Search/artists.dart';
 import 'package:shuno/Services/player_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 bool fetched = false;
 List preferredLanguage = Hive.box('settings')
@@ -53,7 +51,7 @@ class _ShunoHomePageState extends State<ShunoHomePage>
   int playlistIndex = 1;
 
   Future<void> getHomePageData() async {
-    Map recievedData = await BackendApi().fetchHomePageData();
+    final Map recievedData = await BackendApi().fetchHomePageData();
 
     BackendApi.printWarning(recievedData);
 

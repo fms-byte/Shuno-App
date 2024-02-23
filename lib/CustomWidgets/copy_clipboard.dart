@@ -1,9 +1,9 @@
 //Shuno
 
-import 'package:shuno/CustomWidgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shuno/CustomWidgets/snackbar.dart';
 
 void copyToClipboard({
   required BuildContext context,

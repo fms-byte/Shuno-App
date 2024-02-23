@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:shuno/CustomWidgets/box_switch_tile.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/popup.dart';
 import 'package:shuno/CustomWidgets/snackbar.dart';
 import 'package:shuno/CustomWidgets/textinput_dialog.dart';
 import 'package:shuno/Helpers/config.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 
 class ThemePage extends StatefulWidget {
   final Function? callback;
