@@ -11,13 +11,13 @@ import 'package:shuno/Helpers/format.dart';
 
 
 class BackendApi {
-  String ApiUrl = 'http://192.168.0.109:3000/api';
+  String ApiUrl = 'http://54.80.47.120:5000/api';
   //10.22.130.142
 
   List preferredLanguages = Hive.box('settings')
       .get('preferredLanguage', defaultValue: ['English']) as List;
   Map<String, String> headers = {};
-  String baseUrl = 'http://192.168.0.121:3000';
+  String baseUrl = 'http://54.80.47.120:5000';
   String apiStr = '/api';
   Box settingsBox = Hive.box('settings');
   Map<String, String> endpoints = {
