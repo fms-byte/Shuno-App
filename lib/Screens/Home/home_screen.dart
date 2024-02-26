@@ -36,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String name =
-        Hive.box('settings').get('username', defaultValue: 'Guest') as String;
+    //String name = Hive.box('settings').get('username', defaultValue: 'Guest') as String;
+    dynamic usernameValue = Hive.box('settings').get('username');
+    String name = usernameValue != null ? usernameValue as String : 'Guest';
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final bool rotated = MediaQuery.sizeOf(context).height < screenWidth;
     return Stack(
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             const SizedBox(
-                              height: 60,
+                              height: 40,
                             ),
                             Row(
                               children: [
