@@ -53,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
       // Check if the token is not null
       if (data['user']['token'] != null) {
 
-        await Hive.box('settings').put('username', username.trim());
+        await Hive.box('settings').put('username', data['user']['name']);
         await Hive.box('settings').put('name', data['user']['name']);
         await Hive.box('settings').put('email', data['user']['email']);
         await Hive.box('settings').put('token', data['user']['token']);

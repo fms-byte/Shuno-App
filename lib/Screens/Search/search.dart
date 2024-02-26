@@ -1,7 +1,8 @@
 //Shuno
 
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
@@ -86,45 +87,70 @@ class _SearchPageState extends State<SearchPage> {
     Logger.root.info(
       'fetching search results for ${query == '' ? widget.query : query}',
     );
-    switch (searchType) {
-      case 'ytm':
-        Logger.root.info('calling yt music search');
-        YtMusicService()
-            .search(query == '' ? widget.query : query)
-            .then((value) {
-          setState(() {
-            final songSection =
-                value.firstWhere((element) => element['title'] == 'Songs');
-            songSection['allowViewAll'] = true;
-            searchedList = value;
-            fetched = true;
-          });
-        });
-        break;
-      case 'yt':
-        Logger.root.info('calling youtube search');
-        YouTubeServices()
-            .fetchSearchResults(query == '' ? widget.query : query)
-            .then((value) {
-          setState(() {
-            searchedList = value;
-            fetched = true;
-          });
-        });
-        break;
-      default:
-        Logger.root.info('calling shuno search');
-        searchedList = await BackendApi()
-            .fetchSearchResults(query == '' ? widget.query : query);
-        for (final element in searchedList) {
-          if (element['title'] != 'Top Result') {
-            element['allowViewAll'] = true;
-          }
-        }
-        setState(() {
-          fetched = true;
-        });
+
+    Logger.root.info('calling shuno search');
+
+    final Uri url = Uri.parse('${BackendApi().ApiUrl}/ai-search-songs?search=$query'); // Convert the URL to a Uri object
+    final res = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final result = json.decode(res.body);
+      print(result);
     }
+
+    // return {
+    //   'songs': List.empty(),
+    //   'error': '',
+    // };
+
+
+
+
+    // switch (searchType) {
+    //   // case 'ytm':
+    //   //   Logger.root.info('calling yt music search');
+    //   //   YtMusicService()
+    //   //       .search(query == '' ? widget.query : query)
+    //   //       .then((value) {
+    //   //     setState(() {
+    //   //       final songSection =
+    //   //           value.firstWhere((element) => element['title'] == 'Songs');
+    //   //       songSection['allowViewAll'] = true;
+    //   //       searchedList = value;
+    //   //       fetched = true;
+    //   //     });
+    //   //   });
+    //   //   break;
+    //   // case 'yt':
+    //   //   Logger.root.info('calling youtube search');
+    //   //   YouTubeServices()
+    //   //       .fetchSearchResults(query == '' ? widget.query : query)
+    //   //       .then((value) {
+    //   //     setState(() {
+    //   //       searchedList = value;
+    //   //       fetched = true;
+    //   //     });
+    //   //   });
+    //   //   break;
+    //   default:
+    //
+    //
+    //     // searchedList = await BackendApi()
+    //     //     .fetchSearchResults(query == '' ? widget.query : query);
+    //     // for (final element in searchedList) {
+    //     //   if (element['title'] != 'Top Result') {
+    //     //     element['allowViewAll'] = true;
+    //     //   }
+    //     // }
+    //     // setState(() {
+    //     //   fetched = true;
+    //     // });
+    // }
   }
 
   Future<void> getTrendingSearch() async {

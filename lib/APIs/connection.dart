@@ -12,7 +12,6 @@ import 'package:shuno/Helpers/format.dart';
 
 class BackendApi {
   String ApiUrl = 'http://54.80.47.120:5000/api';
-  //10.22.130.142
 
   List preferredLanguages = Hive.box('settings')
       .get('preferredLanguage', defaultValue: ['English']) as List;
@@ -316,127 +315,138 @@ class BackendApi {
   Future<List<Map<String, dynamic>>> fetchSearchResults(
       String searchQuery,
       ) async {
-    final Map<String, List> result = {};
-    final Map<int, String> position = {};
-    List searchedSongList = [];
-    List searchedAlbumList = [];
-    List searchedPlaylistList = [];
-    List searchedArtistList = [];
-    List searchedTopQueryList = [];
+
+    final String searchUrl = '/ai-search-songs?search=$searchQuery';
+
+
+    final res = await getResponse(searchUrl, usev4: false);
+    print(res);
+
+    // return a dammy <List<Map<String, dynamic>>>
+    return [];
+
+
+    // final Map<String, List> result = {};
+    // final Map<int, String> position = {};
+    // List searchedSongList = [];
+    // List searchedAlbumList = [];
+    // List searchedPlaylistList = [];
+    // List searchedArtistList = [];
+    // List searchedTopQueryList = [];
     // List searchedShowList = [];
     // List searchedEpisodeList = [];
 
-    final String params =
-        '__call=autocomplete.get&cc=in&includeMetaTags=1&query=$searchQuery';
 
-    final res = await getResponse(params, usev4: false);
-    if (res.statusCode == 200) {
-      final getMain = json.decode(res.body);
-      final List albumResponseList = getMain['albums']['data'] as List;
-      position[getMain['albums']['position'] as int] = 'Albums';
+    // final String params =
+    //     '__call=autocomplete.get&cc=in&includeMetaTags=1&query=$searchQuery';
 
-      final List playlistResponseList = getMain['playlists']['data'] as List;
-      position[getMain['playlists']['position'] as int] = 'Playlists';
-
-      final List artistResponseList = getMain['artists']['data'] as List;
-      position[getMain['artists']['position'] as int] = 'Artists';
-
-      // final List showResponseList = getMain['shows']['data'] as List;
-      // position[getMain['shows']['position'] as int] = 'Podcasts';
-
-      // final List episodeResponseList = getMain['episodes']['data'] as List;
-      // position[getMain['episodes']['position'] as int] = 'Episodes';
-
-      final List topQuery = getMain['topquery']['data'] as List;
-
-      searchedAlbumList =
-      await FormatResponse.formatAlbumResponse(albumResponseList, 'album');
-      if (searchedAlbumList.isNotEmpty) {
-        result['Albums'] = searchedAlbumList;
-      }
-
-      searchedPlaylistList = await FormatResponse.formatAlbumResponse(
-        playlistResponseList,
-        'playlist',
-      );
-      if (searchedPlaylistList.isNotEmpty) {
-        result['Playlists'] = searchedPlaylistList;
-      }
-
-      // searchedShowList =
-      //     await FormatResponse().formatAlbumResponse(showResponseList, 'show');
-      // if (searchedShowList.isNotEmpty) {
-      //   result['Podcasts'] = searchedShowList;
-      // }
-
-      // searchedEpisodeList = await FormatResponse()
-      //     .formatAlbumResponse(episodeResponseList, 'episode');
-      // if (searchedEpisodeList.isNotEmpty) {
-      //   result['Episodes'] = searchedEpisodeList;
-      // }
-
-      searchedArtistList = await FormatResponse.formatAlbumResponse(
-        artistResponseList,
-        'artist',
-      );
-      if (searchedArtistList.isNotEmpty) {
-        result['Artists'] = searchedArtistList;
-      }
-
-      searchedSongList = (await BackendApi().fetchSongSearchResults(
-        searchQuery: searchQuery,
-        count: 5,
-      ))['songs'] as List? ??
-          [];
-      if (searchedSongList.isNotEmpty) {
-        result['Songs'] = searchedSongList;
-      }
-
-      if (topQuery.isNotEmpty &&
-          (topQuery[0]['type'] != 'playlist' ||
-              topQuery[0]['type'] == 'artist' ||
-              topQuery[0]['type'] == 'album')) {
-        position[getMain['topquery']['position'] as int] = 'Top Result';
-        position[getMain['songs']['position'] as int] = 'Songs';
-
-        switch (topQuery[0]['type'] as String) {
-          case 'artist':
-            searchedTopQueryList =
-            await FormatResponse.formatAlbumResponse(topQuery, 'artist');
-            break;
-          case 'album':
-            searchedTopQueryList =
-            await FormatResponse.formatAlbumResponse(topQuery, 'album');
-            break;
-          case 'playlist':
-            searchedTopQueryList =
-            await FormatResponse.formatAlbumResponse(topQuery, 'playlist');
-            break;
-          default:
-            break;
-        }
-        if (searchedTopQueryList.isNotEmpty) {
-          result['Top Result'] = searchedTopQueryList;
-        }
-      } else {
-        if (topQuery.isNotEmpty && topQuery[0]['type'] == 'song') {
-          position[getMain['topquery']['position'] as int] = 'Songs';
-        } else {
-          position[getMain['songs']['position'] as int] = 'Songs';
-        }
-      }
-    }
-
-    final sortedKeys = position.entries.toList()
-      ..sort((a, b) => a.key.compareTo(b.key));
-
-    final List<Map<String, dynamic>> finalList = [];
-    for (final entry in sortedKeys) {
-      if (result.containsKey(entry.value)) {
-        finalList.add({'title': entry.value, 'items': result[entry.value]});
-      }
-    }
-    return finalList;
+    // if (res.statusCode == 200) {
+    //   final getMain = json.decode(res.body);
+    //   final List albumResponseList = getMain['albums']['data'] as List;
+    //   position[getMain['albums']['position'] as int] = 'Albums';
+    //
+    //   final List playlistResponseList = getMain['playlists']['data'] as List;
+    //   position[getMain['playlists']['position'] as int] = 'Playlists';
+    //
+    //   final List artistResponseList = getMain['artists']['data'] as List;
+    //   position[getMain['artists']['position'] as int] = 'Artists';
+    //
+    //   // final List showResponseList = getMain['shows']['data'] as List;
+    //   // position[getMain['shows']['position'] as int] = 'Podcasts';
+    //
+    //   // final List episodeResponseList = getMain['episodes']['data'] as List;
+    //   // position[getMain['episodes']['position'] as int] = 'Episodes';
+    //
+    //   final List topQuery = getMain['topquery']['data'] as List;
+    //
+    //   searchedAlbumList =
+    //   await FormatResponse.formatAlbumResponse(albumResponseList, 'album');
+    //   if (searchedAlbumList.isNotEmpty) {
+    //     result['Albums'] = searchedAlbumList;
+    //   }
+    //
+    //   searchedPlaylistList = await FormatResponse.formatAlbumResponse(
+    //     playlistResponseList,
+    //     'playlist',
+    //   );
+    //   if (searchedPlaylistList.isNotEmpty) {
+    //     result['Playlists'] = searchedPlaylistList;
+    //   }
+    //
+    //   // searchedShowList =
+    //   //     await FormatResponse().formatAlbumResponse(showResponseList, 'show');
+    //   // if (searchedShowList.isNotEmpty) {
+    //   //   result['Podcasts'] = searchedShowList;
+    //   // }
+    //
+    //   // searchedEpisodeList = await FormatResponse()
+    //   //     .formatAlbumResponse(episodeResponseList, 'episode');
+    //   // if (searchedEpisodeList.isNotEmpty) {
+    //   //   result['Episodes'] = searchedEpisodeList;
+    //   // }
+    //
+    //   searchedArtistList = await FormatResponse.formatAlbumResponse(
+    //     artistResponseList,
+    //     'artist',
+    //   );
+    //   if (searchedArtistList.isNotEmpty) {
+    //     result['Artists'] = searchedArtistList;
+    //   }
+    //
+    //   searchedSongList = (await BackendApi().fetchSongSearchResults(
+    //     searchQuery: searchQuery,
+    //     count: 5,
+    //   ))['songs'] as List? ??
+    //       [];
+    //   if (searchedSongList.isNotEmpty) {
+    //     result['Songs'] = searchedSongList;
+    //   }
+    //
+    //   if (topQuery.isNotEmpty &&
+    //       (topQuery[0]['type'] != 'playlist' ||
+    //           topQuery[0]['type'] == 'artist' ||
+    //           topQuery[0]['type'] == 'album')) {
+    //     position[getMain['topquery']['position'] as int] = 'Top Result';
+    //     position[getMain['songs']['position'] as int] = 'Songs';
+    //
+    //     switch (topQuery[0]['type'] as String) {
+    //       case 'artist':
+    //         searchedTopQueryList =
+    //         await FormatResponse.formatAlbumResponse(topQuery, 'artist');
+    //         break;
+    //       case 'album':
+    //         searchedTopQueryList =
+    //         await FormatResponse.formatAlbumResponse(topQuery, 'album');
+    //         break;
+    //       case 'playlist':
+    //         searchedTopQueryList =
+    //         await FormatResponse.formatAlbumResponse(topQuery, 'playlist');
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //     if (searchedTopQueryList.isNotEmpty) {
+    //       result['Top Result'] = searchedTopQueryList;
+    //     }
+    //   } else {
+    //     if (topQuery.isNotEmpty && topQuery[0]['type'] == 'song') {
+    //       position[getMain['topquery']['position'] as int] = 'Songs';
+    //     } else {
+    //       position[getMain['songs']['position'] as int] = 'Songs';
+    //     }
+    //   }
+    // }
+    //
+    // final sortedKeys = position.entries.toList()
+    //   ..sort((a, b) => a.key.compareTo(b.key));
+    //
+    // final List<Map<String, dynamic>> finalList = [];
+    // for (final entry in sortedKeys) {
+    //   if (result.containsKey(entry.value)) {
+    //     finalList.add({'title': entry.value, 'items': result[entry.value]});
+    //   }
+    // }
+    //return finalList;
   }
 
   Future<List<Map>> fetchAlbums({
