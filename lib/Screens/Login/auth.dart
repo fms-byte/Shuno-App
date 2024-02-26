@@ -18,12 +18,16 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  TextEditingController controller = TextEditingController();
+  //TextEditingController controller = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   Uuid uuid = const Uuid();
 
   @override
   void dispose() {
-    controller.dispose();
+    //controller.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -53,6 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
       // Check if the token is not null
       if (data['user']['token'] != null) {
 
+ 
         await Hive.box('settings').put('username', data['user']['name']);
         await Hive.box('settings').put('name', data['user']['name']);
         await Hive.box('settings').put('email', data['user']['email']);
@@ -63,7 +68,7 @@ class _AuthScreenState extends State<AuthScreen> {
         final String userId = uuid.v1();
         await Hive.box('settings').put('userId', userId);
         Navigator.popAndPushNamed(context, '/pref');
-        // Store the tocken
+        // Store the token
         //Navigator.pushReplacementNamed(context, '/home'); // Replace current screen with the home screen
       } else {
         // Token is null, show an error message
@@ -112,8 +117,8 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final TextEditingController usernameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    //final TextEditingController usernameController = TextEditingController();
+    //final TextEditingController passwordController = TextEditingController();
 
     return GradientContainer(
       child: Scaffold(
@@ -231,7 +236,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     controller: usernameController,
                                     textAlignVertical: TextAlignVertical.center,
 
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.name,
                                     style: const TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
                                       focusedBorder: const UnderlineInputBorder(
@@ -247,8 +252,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                             .secondary,
                                       ),
                                       border: InputBorder.none,
-                                      hintText: AppLocalizations.of(context)!
-                                          .enterName,
+                                      hintText: 'Enter your Username',
                                       hintStyle: const TextStyle(
                                         color: Colors.white60,
                                       ),
@@ -283,7 +287,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       obscureText: true,
                                       controller: passwordController,
 
-                                      keyboardType: TextInputType.text,
+                                      keyboardType: TextInputType.visiblePassword,
                                       style: const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         focusedBorder: const UnderlineInputBorder(
