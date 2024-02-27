@@ -1,15 +1,12 @@
 //Shuno
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:shuno/CustomWidgets/bottom_nav_bar.dart';
 import 'package:shuno/CustomWidgets/drawer.dart';
 import 'package:shuno/CustomWidgets/gradient_containers.dart';
 import 'package:shuno/CustomWidgets/miniplayer.dart';
@@ -22,10 +19,8 @@ import 'package:shuno/Helpers/update.dart';
 import 'package:shuno/Screens/Common/routes.dart';
 import 'package:shuno/Screens/Home/home_screen.dart';
 import 'package:shuno/Screens/Library/library.dart';
-import 'package:shuno/Screens/LocalMusic/downed_songs.dart';
-import 'package:shuno/Screens/LocalMusic/downed_songs_desktop.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/Screens/Settings/new_settings_page.dart';
+import 'package:shuno/Screens/Search/search.dart';
 import 'package:shuno/Services/ext_storage_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       Hive.box('settings').get('autoBackup', defaultValue: false) as bool;
   List sectionsToShow = Hive.box('settings').get(
     'sectionsToShow',
-    defaultValue: ['Home', 'Setting', 'Library'],
+    defaultValue: ['Home', 'Search', 'Library'],
   ) as List;
   DateTime? backButtonPressTime;
   final bool useDense = false;
@@ -52,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   void callback() {
     sectionsToShow = Hive.box('settings').get(
       'sectionsToShow',
-      defaultValue: ['Home', 'Setting', 'Library'],
+      defaultValue: ['Home', 'Search', 'Library'],
     ) as List;
     onItemTapped(0);
     setState(() {});
@@ -225,216 +220,6 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
-        drawer: Drawer(
-          child: GradientContainer(
-            child: CustomScrollView(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  automaticallyImplyLeading: false,
-                  elevation: 0,
-                  stretch: true,
-                  expandedHeight: MediaQuery.sizeOf(context).height * 0.2,
-                  flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: const EdgeInsets.only(bottom: 40.0),
-                    centerTitle: true,
-                    background: ShaderMask(
-                      shaderCallback: (rect) {
-                        return LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.8),
-                            Colors.black.withOpacity(0.1),
-                          ],
-                        ).createShader(
-                          Rect.fromLTRB(0, 0, rect.width, rect.height),
-                        );
-                      },
-                      blendMode: BlendMode.dstIn,
-                      child: Image(
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        image: AssetImage(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? 'assets/header-dark.jpg'
-                              : 'assets/header.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      ValueListenableBuilder(
-                        valueListenable: _selectedIndex,
-                        builder: (
-                          BuildContext context,
-                          int snapshot,
-                          Widget? child,
-                        ) {
-                          return Column(
-                            children: [
-                              ListTile(
-                                title: Text(
-                                  AppLocalizations.of(context)!.home,
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: const Icon(
-                                  Icons.home_rounded,
-                                ),
-                                selected: _selectedIndex.value ==
-                                    sectionsToShow.indexOf('Home'),
-                                selectedColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  if (_selectedIndex.value != 0) {
-                                    onItemTapped(0);
-                                  }
-                                },
-                              ),
-                              ListTile(
-                                title:
-                                    Text(AppLocalizations.of(context)!.myMusic),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: Icon(
-                                  MdiIcons.folderMusic,
-                                  color: Theme.of(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          (Platform.isWindows ||
-                                                  Platform.isLinux ||
-                                                  Platform.isMacOS)
-                                              ? const DownloadedSongsDesktop()
-                                              : const DownloadedSongs(
-                                                  showPlaylists: true,
-                                                ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              ListTile(
-                                title:
-                                    Text(AppLocalizations.of(context)!.downs),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: Icon(
-                                  Icons.download_done_rounded,
-                                  color: Theme.of(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/downloads');
-                                },
-                              ),
-                              ListTile(
-                                title: Text(
-                                  AppLocalizations.of(context)!.playlists,
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: Icon(
-                                  Icons.playlist_play_rounded,
-                                  color: Theme.of(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/playlists');
-                                },
-                              ),
-                              ListTile(
-                                title: Text(
-                                  AppLocalizations.of(context)!.settings,
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                // miscellaneous_services_rounded,
-                                leading: const Icon(Icons.settings_rounded),
-                                selected: _selectedIndex.value ==
-                                    sectionsToShow.indexOf('Settings'),
-                                selectedColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  final idx =
-                                      sectionsToShow.indexOf('Settings');
-                                  if (idx != -1) {
-                                    if (_selectedIndex.value != idx) {
-                                      onItemTapped(idx);
-                                    }
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            NewSettingsPage(callback: callback),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              ListTile(
-                                title:
-                                    Text(AppLocalizations.of(context)!.about),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: Icon(
-                                  Icons.info_outline_rounded,
-                                  color: Theme.of(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/about');
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: <Widget>[
-                      const Spacer(),
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.madeBy,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         body: Row(
           children: [
             if (rotated)
@@ -484,6 +269,12 @@ class _HomePageState extends State<HomePage> {
                               label: Text(AppLocalizations.of(context)!.home),
                             );
 
+                          case 'Search':
+                            return NavigationRailDestination(
+                              icon: const Icon(Icons.search),
+                              label: Text(AppLocalizations.of(context)!.search),
+                            );
+
                           case 'Library':
                             return NavigationRailDestination(
                               icon: const Icon(Icons.my_library_music_rounded),
@@ -492,10 +283,8 @@ class _HomePageState extends State<HomePage> {
                             );
                           default:
                             return NavigationRailDestination(
-                              icon: const Icon(Icons.settings_rounded),
-                              label: Text(
-                                AppLocalizations.of(context)!.settings,
-                              ),
+                              icon: const Icon(Icons.home_rounded),
+                              label: Text(AppLocalizations.of(context)!.home),
                             );
                         }
                       }).toList(),
@@ -509,7 +298,6 @@ class _HomePageState extends State<HomePage> {
                 controller: _controller,
                 itemCount: sectionsToShow.length,
                 navBarHeight: (rotated ? 55 : 55 + 70) + (useDense ? 0 : 15),
-                // confineInSafeArea: false,
                 onItemTapped: onItemTapped,
                 routeAndNavigatorSettings:
                     CustomWidgetRouteAndNavigatorSettings(
@@ -539,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 100),
                             height: 60,
-                            child: CustomBottomNavBar(
+                            child: BottomNavigationBar(
                               currentIndex: indexValue,
                               backgroundColor: Theme.of(context).brightness ==
                                       Brightness.dark
@@ -561,8 +349,10 @@ class _HomePageState extends State<HomePage> {
                       return const SafeArea(child: HomeScreen());
                     case 'Library':
                       return const LibraryPage();
+                    case 'Search':
+                      return const SearchPage(query: "");
                     default:
-                      return NewSettingsPage(callback: callback);
+                      return const SafeArea(child: HomeScreen());
                   }
                 }).toList(),
               ),
@@ -573,27 +363,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<CustomBottomNavBarItem> _navBarItems(BuildContext context) {
+  List<BottomNavigationBarItem> _navBarItems(BuildContext context) {
     return sectionsToShow.map((section) {
+      // Mapping each section to a BottomNavigationBarItem
       switch (section) {
         case 'Home':
-          return CustomBottomNavBarItem(
+          return BottomNavigationBarItem(
             icon: const Icon(Icons.home_rounded),
-            title: Text(AppLocalizations.of(context)!.home),
-            selectedColor: Theme.of(context).colorScheme.secondary,
+            label: AppLocalizations.of(context)!.home,
           );
-
+        case 'Search':
+          return BottomNavigationBarItem(
+            icon: const Icon(Icons.search),
+            label: AppLocalizations.of(context)!.search,
+          );
         case 'Library':
-          return CustomBottomNavBarItem(
+          return BottomNavigationBarItem(
             icon: const Icon(Icons.my_library_music_rounded),
-            title: Text(AppLocalizations.of(context)!.library),
-            selectedColor: Theme.of(context).colorScheme.secondary,
+            label: AppLocalizations.of(context)!.library,
           );
         default:
-          return CustomBottomNavBarItem(
-            icon: const Icon(Icons.settings_rounded),
-            title: Text(AppLocalizations.of(context)!.settings),
-            selectedColor: Theme.of(context).colorScheme.secondary,
+          return BottomNavigationBarItem(
+            icon: const Icon(Icons.home_rounded),
+            label: AppLocalizations.of(context)!.home,
           );
       }
     }).toList();

@@ -58,12 +58,11 @@ class _AuthScreenState extends State<AuthScreen> {
       if (data['user']['token'] != null) {
 
  
-        await Hive.box('settings').put('username', data['user']['name']);
+        await Hive.box('settings').put('username', data['user']['username']);
         await Hive.box('settings').put('name', data['user']['name']);
         await Hive.box('settings').put('email', data['user']['email']);
         await Hive.box('settings').put('token', data['user']['token']);
         await Hive.box('settings').put('id', data['user']['id']);
-
 
         final String userId = uuid.v1();
         await Hive.box('settings').put('userId', userId);

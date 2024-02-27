@@ -5,7 +5,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/Services/youtube_services.dart';
 
 SendPort? isolateSendPort;
 
@@ -42,8 +41,6 @@ Future<void> _backgroundProcess(SendPort sendPort) async {
       hiveInit = true;
       continue;
     }
-    final newData = await YouTubeServices().refreshLink(message.toString());
-    sendPort.send(newData);
   }
 }
 

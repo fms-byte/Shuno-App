@@ -40,7 +40,6 @@ import 'package:shuno/Helpers/mediaitem_converter.dart';
 import 'package:shuno/Screens/Common/song_list.dart';
 import 'package:shuno/Screens/Search/albums.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PlayScreen extends StatefulWidget {
   const PlayScreen({super.key});
@@ -375,16 +374,7 @@ class _PlayScreenState extends State<PlayScreen> {
                             },
                           );
                         }
-                        if (value == 3) {
-                          launchUrl(
-                            Uri.parse(
-                              mediaItem.genre == 'YouTube'
-                                  ? 'https://youtube.com/watch?v=${mediaItem.id}'
-                                  : 'https://www.youtube.com/results?search_query=${mediaItem.title} by ${mediaItem.artist}',
-                            ),
-                            mode: LaunchMode.externalApplication,
-                          );
-                        }
+
                         if (value == 1) {
                           showDialog(
                             context: context,
@@ -1255,6 +1245,7 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
     'type': '',
   };
   final lyricUI = UINetease();
+
   LyricsReaderModel? lyricsReaderModel;
   bool flipped = false;
 
@@ -1262,6 +1253,21 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
     Logger.root.info('Fetching lyrics for ${widget.mediaItem.title}');
     done.value = false;
     lyricsSource.value = '';
+
+    if (widget.mediaItem.extras!['lyricsSnippet'] != null) {
+      done.value = true;
+      done.value = true;
+      lyrics['lyrics'] = widget.mediaItem.extras!['lyricsSnippet'];
+      lyrics['type'] = 'text';
+      lyrics['source'] = 'Local';
+      lyrics['id'] = widget.mediaItem.id;
+      lyricsSource.value = lyrics['source'].toString();
+      lyricsReaderModel = LyricsModelBuilder.create()
+          .bindLyricToMain(lyrics['lyrics'].toString())
+          .getModel();
+      return;
+    }
+
     if (widget.offline) {
       Lyrics.getOffLyrics(
         widget.mediaItem.extras!['url'].toString(),

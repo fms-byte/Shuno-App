@@ -11,7 +11,6 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shuno/Helpers/mediaitem_converter.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
-import 'package:shuno/Services/youtube_services.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class PlayerInvoke {
@@ -30,6 +29,15 @@ class PlayerInvoke {
     final int globalIndex = index < 0 ? 0 : index;
     bool? offline = isOffline;
     final List finalList = songsList.toList();
+    // print all the songs
+    print("All Songs: " + songsList.length.toString());
+
+    // if songList is not empty then print the first song
+    if (songsList.length > 0) {
+      print("First Song: " + songsList[0].toString());
+    }
+    ;
+
     if (shuffle) finalList.shuffle();
     if (offline == null) {
       if (audioHandler.mediaItem.value?.extras!['url'].startsWith('http')
@@ -177,42 +185,6 @@ class PlayerInvoke {
       Logger.root.info(
         'before service | youtube link expired for ${playItem["title"]}',
       );
-      if (Hive.box('ytlinkcache').containsKey(playItem['id'])) {
-        final Map cache =
-            await Hive.box('ytlinkcache').get(playItem['id']) as Map;
-        final int expiredAt = int.parse((cache['expire_at'] ?? '0').toString());
-        // final String wasCacheEnabled = cache['cached'].toString();
-        if ((DateTime.now().millisecondsSinceEpoch ~/ 1000) + 350 > expiredAt) {
-          Logger.root
-              .info('youtube link expired in cache for ${playItem["title"]}');
-          final newData =
-              await YouTubeServices().refreshLink(playItem['id'].toString());
-          Logger.root.info(
-            'before service | received new link for ${playItem["title"]}',
-          );
-          if (newData != null) {
-            playItem['url'] = newData['url'];
-            playItem['duration'] = newData['duration'];
-            playItem['expire_at'] = newData['expire_at'];
-          }
-        } else {
-          Logger.root
-              .info('youtube link found in cache for ${playItem["title"]}');
-          playItem['url'] = cache['url'];
-          playItem['expire_at'] = cache['expire_at'];
-        }
-      } else {
-        final newData =
-            await YouTubeServices().refreshLink(playItem['id'].toString());
-        Logger.root.info(
-          'before service | received new link for ${playItem["title"]}',
-        );
-        if (newData != null) {
-          playItem['url'] = newData['url'];
-          playItem['duration'] = newData['duration'];
-          playItem['expire_at'] = newData['expire_at'];
-        }
-      }
     }
   }
 
