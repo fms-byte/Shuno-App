@@ -18,7 +18,6 @@ import 'package:shuno/Helpers/mediaitem_converter.dart';
 import 'package:shuno/Helpers/playlist.dart';
 import 'package:shuno/Screens/Player/audioplayer.dart';
 import 'package:shuno/Services/isolate_service.dart';
-import 'package:shuno/Services/yt_music.dart';
 
 class AudioPlayerHandlerImpl extends BaseAudioHandler
     with QueueHandler, SeekHandler
@@ -212,14 +211,6 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
                     if (!mediaQueue.contains(element)) {
                       addQueueItem(element);
                     }
-                  }
-                } else {
-                  final res = await YtMusicService()
-                      .getWatchPlaylist(videoId: item.id, limit: 5);
-                  Logger.root.info('Recieved recommendations: $res');
-                  refreshLinks.addAll(res);
-                  if (!jobRunning) {
-                    refreshJob();
                   }
                 }
               }

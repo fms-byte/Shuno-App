@@ -1,15 +1,7 @@
 //Shuno
 
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shuno/CustomWidgets/drawer.dart';
-import 'package:shuno/CustomWidgets/textinput_dialog.dart';
 import 'package:shuno/Screens/Home/shuno.dart';
-import 'package:shuno/Screens/Search/search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -37,224 +29,59 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     //String name = Hive.box('settings').get('username', defaultValue: 'Guest') as String;
-    dynamic usernameValue = Hive.box('settings').get('username');
-    String name = usernameValue != null ? usernameValue as String : 'Guest';
-    final double screenWidth = MediaQuery.sizeOf(context).width;
-    final bool rotated = MediaQuery.sizeOf(context).height < screenWidth;
-    return Stack(
-      children: [
-        NestedScrollView(
-          physics: const BouncingScrollPhysics(),
-          controller: _scrollController,
-          headerSliverBuilder: (
-            BuildContext context,
-            bool innerBoxScrolled,
-          ) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 135,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                // pinned: true,
-                toolbarHeight: 65,
-                // floating: true,
-                automaticallyImplyLeading: false,
-                flexibleSpace: LayoutBuilder(
-                  builder: (
-                    BuildContext context,
-                    BoxConstraints constraints,
-                  ) {
-                    return FlexibleSpaceBar(
-                      // collapseMode: CollapseMode.parallax,
-                      background: GestureDetector(
-                        onTap: () async {
-                          showTextInputDialog(
-                            context: context,
-                            title: 'Name',
-                            initialText: name,
-                            keyboardType: TextInputType.name,
-                            onSubmitted: (String value, BuildContext context) {
-                              Hive.box('settings').put(
-                                'name',
-                                value.trim(),
-                              );
-                              name = value.trim();
-                              Navigator.pop(context);
-                            },
-                          );
-                          // setState(() {});
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 15.0,
-                                  ),
-                                  child: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.homeGreet,
-                                    style: TextStyle(
-                                      letterSpacing: 2,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.secondary,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 15.0,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  ValueListenableBuilder(
-                                    valueListenable: Hive.box(
-                                      'settings',
-                                    ).listenable(),
-                                    builder: (
-                                      BuildContext context,
-                                      Box box,
-                                      Widget? child,
-                                    ) {
-                                      return Text(
-                                        (box.get('username') == null ||
-                                                box.get('username') == '')
-                                            ? 'Guest'
-                                            : box
-                                                .get(
-                                                  'username',
-                                                )
-                                                .split(
-                                                  ' ',
-                                                )[0]
-                                                .toString(),
-                                        style: const TextStyle(
-                                          letterSpacing: 2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+
+    final brightness = Theme.of(context).brightness;
+
+    // Determine the image path based on the theme brightness
+    final imagePath = brightness == Brightness.dark
+        ? 'assets/dark_logo.png' // Image for dark theme
+        : 'assets/light_logo.png'; // Image for light theme
+
+    // final double screenWidth = MediaQuery.sizeOf(context).width;
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 70,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Image.asset(
+                  imagePath,
+                  height: 40,
+                ),
+                const Spacer(), // Creates space between the image and the icons
+                IconButton(
+                  icon: const Icon(Icons.notification_add_outlined),
+                  // Notification icon
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/notification');
                   },
                 ),
-              ),
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                pinned: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                stretch: true,
-                toolbarHeight: 65,
-                title: Align(
-                  alignment: Alignment.centerRight,
-                  child: AnimatedBuilder(
-                    animation: _scrollController,
-                    builder: (context, child) {
-                      return GestureDetector(
-                        child: AnimatedContainer(
-                          width: (!_scrollController.hasClients ||
-                                  _scrollController.positions.length > 1)
-                              ? MediaQuery.sizeOf(context).width
-                              : max(
-                                  MediaQuery.sizeOf(context).width -
-                                      _scrollController.offset.roundToDouble(),
-                                  MediaQuery.sizeOf(context).width -
-                                      (rotated ? 0 : 75),
-                                ),
-                          height: 55.0,
-                          duration: const Duration(
-                            milliseconds: 150,
-                          ),
-                          padding: const EdgeInsets.all(2.0),
-                          // margin: EdgeInsets.zero,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10.0,
-                            ),
-                            color: Theme.of(context).cardColor,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 5.0,
-                                offset: Offset(1.5, 1.5),
-                                // shadow direction: bottom right
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              Icon(
-                                CupertinoIcons.search,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!
-                                    .searchText,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .color,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SearchPage(
-                              query: '',
-                              fromHome: true,
-                              autofocus: true,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                IconButton(
+                  icon: const Icon(Icons.history_rounded), // Profile icon
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/recent');
+                  },
                 ),
-              ),
-            ];
-          },
-          body: ShunoHomePage(),
-        ),
-        if (!rotated)
-          homeDrawer(
-            context: context,
-            padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+                IconButton(
+                  icon: const Icon(Icons.settings_outlined), // Profile icon
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/setting');
+                  },
+                ),
+              ],
+            ),
           ),
-      ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: ShunoHomePage(), // Your main content here
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

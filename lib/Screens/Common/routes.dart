@@ -12,6 +12,7 @@ import 'package:shuno/Screens/Library/stats.dart';
 import 'package:shuno/Screens/Login/auth.dart';
 import 'package:shuno/Screens/Login/pref.dart';
 import 'package:shuno/Screens/Login/register.dart';
+import 'package:shuno/Screens/Notification/all.dart';
 import 'package:shuno/Screens/Settings/new_settings_page.dart';
 
 Widget initialFuntion() {
@@ -32,4 +33,5 @@ final Map<String, Widget Function(BuildContext)> namedRoutes = {
   '/downloads': (context) => const Downloads(),
   '/stats': (context) => const Stats(),
   '/register': (context) => Register(),
+  '/notification': (context) => NotificationPage(),
 };
